@@ -148,7 +148,7 @@ test('exportBibtex: newest first, full or only changed', () => {
 });
 
 test('exportBibtex of the real data without changes reproduces data/publications.bib entries in order', () => {
-  const entries = parseBibtex(readFileSync(new URL('../data/publications.bib', import.meta.url), 'utf8'));
+  const entries = parseBibtex(readFileSync(new URL('./fixtures/publications.bib', import.meta.url), 'utf8'));
   const s = makeStore({ generated: 'x', entries });
   const exported = s.exportBibtex();
   assert.deepEqual(parseBibtex(exported), entries);

@@ -123,7 +123,7 @@ Only you can see the preview, and only in this browser.
 Before publishing, GitHub checks that the file can be read: braces match, no two papers share a citation key, every paper has a title. If the check fails, **the update is stopped and the live site stays exactly as it was.** Nothing breaks.
 
 1. You'll see a red cross on the Actions page, and GitHub usually emails you.
-2. Click the failed run, then **build**, then the step **Run npm test**. It names the problem and the line, e.g. `Unbalanced braces (line 3035)`.
+2. Click the failed run, then **build**, then the step **Check data/publications.bib**. It names the problem and the line, e.g. `Unbalanced braces (line 3035)` or `citation key is used twice`.
 3. Your edits are still in the editor, because they stay pending until they are live. Fix the problem there, download the file again and upload it again.
 4. If it isn't clear what went wrong, forward the email to a student.
 
@@ -134,10 +134,9 @@ A file downloaded from the editor normally passes. Errors usually come from edit
 Pending changes are stored in **one browser on one computer**, not in your account.
 
 - **Simplest:** publish before you switch computers.
-- **To move unpublished work:** on the first computer, click **Export & publish → Backup of everything (.json)**. On the second computer, sign in, open **Import BibTeX**, choose that `.json` file, then **Review import → Import**. Only your new and edited papers show up as changes.
-- **Deletions do not travel** in the backup. Delete those papers again on the second computer.
-- **Two people editing at the same time:** if someone else published while you were working, reload the editor before you download the file. Otherwise your upload can undo their changes.
-- Clearing your browser history/data or using a private window loses pending changes. Make a JSON backup if you stop halfway.
+- **To move unpublished work:** on the first computer, click **Export & publish → Download pending changes (.json)**. On the second computer, sign in, open **Import BibTeX**, choose that `.json` file, review, and import. New, edited, renamed *and deleted* papers all carry over.
+- **Two people editing at the same time:** the Export page re-reads the live list before building the file, so papers someone else published in the meantime are kept, and it tells you when that happened.
+- Clearing your browser history/data or using a private window loses pending changes. Download your pending changes (.json) if you stop halfway.
 
 ## FAQ
 

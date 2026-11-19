@@ -63,7 +63,8 @@ When a backend exists, replace `src/assets/js/store.js` (data) and `src/assets/j
 ```sh
 npm install
 npm start          # http://localhost:8080 with live reload
-npm test           # BibTeX parsing/rendering tests (also run in CI)
+npm run validate   # check data/publications.bib (CI runs this before deploying)
+npm test           # code tests, run against a frozen copy of the data in tests/fixtures/
 npm run build      # outputs _site/
 ```
 

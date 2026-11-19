@@ -5,7 +5,7 @@ import {
   parseBibtex, parseBibtexWithErrors, serializeEntry, serializeBibtex, latexToText, decodeEntities,
 } from '../src/assets/js/lib/bibtex.js';
 
-const bib = readFileSync(new URL('../data/publications.bib', import.meta.url), 'utf8');
+const bib = readFileSync(new URL('./fixtures/publications.bib', import.meta.url), 'utf8');
 
 /** Small deterministic PRNG so failures are reproducible. */
 function rng(seed) {

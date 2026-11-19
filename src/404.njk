@@ -6,3 +6,15 @@ eleventyExcludeFromCollections: true
 ---
 <p>Sorry, the page you were looking for could not be found. It may have moved when the site was migrated.</p>
 <p>Try the <a href="/">home page</a>, the <a href="/papers/">list of papers</a>, or the <a href="/members/">lab members</a>.</p>
+<script>
+  // Old links used capitalised paths (e.g. /members/Sina-Hazeghi/); GitHub Pages
+  // is case-sensitive, so retry once in lower case before giving up.
+  (function () {
+    var p = location.pathname;
+    if (p !== p.toLowerCase() && !sessionStorage.getItem('pracsys.lc.' + p)) {
+      try { sessionStorage.setItem('pracsys.lc.' + p, '1'); } catch (e) {}
+      location.replace(p.toLowerCase() + location.search + location.hash);
+    }
+  })();
+</script>
+

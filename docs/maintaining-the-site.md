@@ -34,14 +34,15 @@ For lab members who look after the website. You need git and Node 20 or later. F
 ```sh
 npm install
 npm start              # http://localhost:8080 with live reload; editor at /admin/
-npm test               # BibTeX parsing/rendering tests
+npm run validate       # checks data/publications.bib (what CI runs before deploying)
+npm test               # BibTeX parsing/rendering tests (on a frozen copy in tests/fixtures/)
 npm run build          # _site/ for serving at /
 npm run build:pages    # _site/ with the /pracsys-website/ prefix, as CI builds it
 ```
 
 The editor works on `localhost` over plain http. Anywhere else it needs https, because browsers only allow the sign-in crypto there. Pending edits made on `localhost:8080` are stored apart from the ones made on the live site.
 
-**Deploying:** push to `main`. The workflow runs `npm ci`, `npm test` and the build, then publishes `_site/`. If the tests or the build fail, nothing is deployed. To redeploy without a change, use *Actions → Build and deploy site → Run workflow*.
+**Deploying:** push to `main`. The workflow runs `npm ci`, `npm run validate` (data check), `npm test` (code tests) and the build, then publishes `_site/`. If the tests or the build fail, nothing is deployed. To redeploy without a change, use *Actions → Build and deploy site → Run workflow*.
 
 ## Members
 
@@ -212,7 +213,7 @@ browser
 - **Overlay.** Editor changes live in `localStorage` under `pracsys.publications.overlay.v1` as `{ version: 1, startedAgainst, changes: { <key>: { op: "upsert" | "delete", at, user, entry?, renamedFrom?, renamedTo? } } }`. `entries()` applies them to the published set. Tabs stay in sync through the `storage` event and the `pracsys:publications-changed` event.
 - **Preview.** If the overlay is non-empty, `site.js` shows the yellow banner (not on `/admin/`), and each list fetches the data and re-renders with the overlay. *Hide preview* sets `pracsys.preview.off` in `sessionStorage`.
 - **Pruning.** When the editor loads, it fetches `publications.json` with `no-cache` and drops overlay changes that already match the live data. Public pages use normal caching: GitHub Pages sends `max-age=600`.
-- **Export.** `exportBibtex()` sorts the merged set newest first and writes it in teachPress field order. `exportJson()` is the cross-computer backup. Importing it only upserts, so deletions don't carry over.
+- **Export.** `exportBibtex()` sorts the merged set newest first and writes it in teachPress field order. `exportOverlay()` / `importOverlay(json, { merge: true })` move pending changes (including deletions and renames) between computers; `exportJson()` (full entry list) is kept for older backups.
 - **Limits.** The preview can only update lists that the build rendered. A member with `showPublications: false`, or with no matching paper at build time, has no list to update.
 - Old teachPress links (`/papers/?tgid=…&auth=…`) are translated in `publist.js` using `src/assets/js/teachpress-ids.json`.
 - If you change `src/assets/js/lib/`, add a case to `tests/publications.test.js`.

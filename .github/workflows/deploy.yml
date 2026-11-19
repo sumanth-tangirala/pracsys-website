@@ -24,8 +24,12 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      # Fails the deploy if data/publications.bib cannot be parsed, so a bad
-      # upload from the publication editor never reaches the live site.
+      # Stops the deploy if data/publications.bib is broken (syntax errors,
+      # duplicate keys, missing titles), so a bad upload from the publication
+      # editor never reaches the live site. Content changes never fail this.
+      - name: Check data/publications.bib
+        run: npm run validate
+      # Code tests run against a frozen copy of the data (tests/fixtures/).
       - run: npm test
       - run: npm run build
         env:

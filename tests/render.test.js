@@ -9,7 +9,7 @@ import {
 } from '../src/assets/js/lib/publications.js';
 import { renderPager, PAGER_LABELS } from '../src/assets/js/lib/pager.js';
 
-const bib = readFileSync(new URL('../data/publications.bib', import.meta.url), 'utf8');
+const bib = readFileSync(new URL('./fixtures/publications.bib', import.meta.url), 'utf8');
 const pub = (src) => publicationsFromEntries(parseBibtex(src))[0];
 const text = (html) => html.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
 const meta = (src) => text(renderMeta(pub(src)));

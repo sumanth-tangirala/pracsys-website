@@ -4,9 +4,9 @@ import { readFileSync } from 'node:fs';
 import { parseBibtex, parseBibtexWithErrors, serializeBibtex, latexToText } from '../src/assets/js/lib/bibtex.js';
 import { publicationsFromEntries, filterPublications, renderMeta, renderPublication, splitNames, parseName, displayName, parseLinks } from '../src/assets/js/lib/publications.js';
 
-const bib = readFileSync(new URL('../data/publications.bib', import.meta.url), 'utf8');
+const bib = readFileSync(new URL('./fixtures/publications.bib', import.meta.url), 'utf8');
 
-test('data/publications.bib parses without errors', () => {
+test('fixture (snapshot of the teachPress export) parses without errors', () => {
   const { entries, errors } = parseBibtexWithErrors(bib);
   assert.deepEqual(errors, [], errors.map((e) => e.message).join('\n'));
   assert.ok(entries.length > 0);
