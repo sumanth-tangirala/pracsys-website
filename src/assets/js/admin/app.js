@@ -30,7 +30,7 @@ const ctx = {
 };
 
 const NAV = [
-  { path: '/', label: 'Dashboard', icon: 'fa-gauge-high' },
+  { path: '/', label: 'Dashboard', icon: 'fa-house' },
   { path: '/publications', label: 'Publications', icon: 'fa-book' },
   { path: '/publications/new', label: 'Add publication', icon: 'fa-plus' },
   { path: '/import', label: 'Import BibTeX', icon: 'fa-file-import' },

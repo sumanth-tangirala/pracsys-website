@@ -60,15 +60,8 @@ function countText(items) {
 
 export function renderDashboard(main, ctx) {
   const { store, user, config } = ctx;
-  const pubs = store.publications();
-  const thisYear = new Date().getFullYear();
-  const inYear = pubs.filter((p) => p.year === thisYear).length;
   const changes = pendingItems(store);
   const issues = dataIssues(store.entries());
-  const byYear = new Map();
-  for (const p of pubs) if (p.year) byYear.set(p.year, (byYear.get(p.year) || 0) + 1);
-  const years = [...byYear.keys()].sort((a, b) => a - b).slice(-12);
-  const max = Math.max(1, ...years.map((y) => byYear.get(y)));
   const gh = githubLinks(config);
   const firstName = user.name.split(' ')[0];
 
@@ -81,13 +74,6 @@ export function renderDashboard(main, ctx) {
       <div class="adm-head-actions">
         <a class="adm-btn adm-btn-primary" href="#/publications/new"><i class="fa fa-plus" aria-hidden="true"></i> Add publication</a>
       </div>
-    </div>
-
-    <div class="adm-stats">
-      <a class="adm-stat" href="#/publications"><span class="adm-stat-num">${pubs.length}</span><span class="adm-stat-label">publications</span></a>
-      <a class="adm-stat" href="#/publications?year=${thisYear}"><span class="adm-stat-num">${inYear}</span><span class="adm-stat-label">in ${thisYear}</span></a>
-      <a class="adm-stat ${changes.length ? 'adm-stat-warn' : ''}" href="#/changes"><span class="adm-stat-num">${changes.length}</span><span class="adm-stat-label">pending ${changes.length === 1 ? 'change' : 'changes'}</span></a>
-      <a class="adm-stat" href="#issues"><span class="adm-stat-num">${issues.length}</span><span class="adm-stat-label">data ${issues.length === 1 ? 'check' : 'checks'}</span></a>
     </div>
 
     <div class="adm-grid-2">
@@ -111,13 +97,6 @@ export function renderDashboard(main, ctx) {
           : html`<p class="adm-muted">No pending changes. <a href="#/publications/new">Add a publication</a> or <a href="#/import">import BibTeX</a>.</p>`}
       </section>
     </div>
-
-    <section class="adm-card">
-      <h2 id="bars-heading">Publications per year</h2>
-      <ul class="adm-bars" aria-labelledby="bars-heading">
-        ${years.map((y) => html`<li><a class="adm-bar" href="#/publications?year=${y}" aria-label="${y}: ${plural(byYear.get(y), 'publication')}"><span class="adm-bar-val" aria-hidden="true">${byYear.get(y)}</span><span class="adm-bar-fill" style="height:${Math.round((byYear.get(y) / max) * 100)}%"></span><span class="adm-bar-label" aria-hidden="true">${String(y).slice(2)}</span></a></li>`)}
-      </ul>
-    </section>
 
     <section class="adm-card" id="issues">
       <h2>Data checks <span class="adm-muted">(${issues.length})</span></h2>
