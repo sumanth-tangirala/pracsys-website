@@ -41,7 +41,9 @@ Where a paper appears:
 
 - **Papers** — all of them, newest first by `date`, grouped by `year`.
 - **Project pages** — by tag (`keywords`): Manipulation, Verification, Soft-Robots, Perception, Planning. The Dynamics page lists a fixed set of papers, as on the old site; change `filter` in `src/_data/projects.json` to `{ "tags": ["Dynamics"] }` to make it tag-based.
-- **Member pages** — by author name, e.g. `S Tangirala` (listed in `authors` in `src/_data/members.json`). Write names the same way on every paper.
+- **Member pages** — by author name (`authors` in `src/_data/members.json`, e.g. `Tangirala, S`), matched on last name + first initial, so `S Tangirala`, `Sumanth Tangirala` and `Tangirala, S.` all count. The lab convention is still `S Tangirala`; the editor offers a one-click fix for other spellings.
+
+To publish, an editor needs **write access to this GitHub repository** (Settings → Collaborators).
 
 ### About sign-in
 
