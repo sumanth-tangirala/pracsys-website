@@ -161,6 +161,11 @@
 
 .tp-loading { opacity: .5; transition: opacity .15s; }
 
+@media (pointer: coarse) {
+  .tp_pub_menu { line-height: 2.1; }
+  .tp_pub_menu .tp_show, .tp_close { padding: 4px 2px; }
+}
+
 @media (max-width: 767px) {
   .teachpress_filter select, .teachpress_filter input[type="search"] { flex: 1 1 45%; max-width: none !important; width: auto; }
   .tablenav { justify-content: center; }

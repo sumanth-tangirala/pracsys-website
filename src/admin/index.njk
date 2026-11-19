@@ -17,7 +17,13 @@ eleventyExcludeFromCollections: true
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css">
 <link rel="stylesheet" href="/assets/css/teachpress.css">
 <link rel="stylesheet" href="/assets/css/admin.css">
-<script>window.PRACSYS_BASE = {{ env.pathPrefix | json | safe }};</script>
+<script>
+  // Sign-in hashes passwords with Web Crypto, which browsers only allow over https.
+  if (location.protocol === 'http:' && !/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)) {
+    location.replace('https:' + location.href.slice(5));
+  }
+  window.PRACSYS_BASE = {{ env.pathPrefix | json | safe }};
+</script>
 <script type="application/json" id="admin-config">{
   "repo": {{ site.repo | json | safe }},
   "branch": {{ site.branch | json | safe }},

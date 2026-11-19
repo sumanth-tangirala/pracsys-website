@@ -74,19 +74,26 @@ class Publist {
     this.pagerBottom = root.querySelector('.tp-pager-bottom');
     this.pubs = null;
 
-    if (this.config.syncUrl) this.readUrl();
     bindToggles(root);
     root.addEventListener('click', (e) => this.onPagerClick(e));
     if (this.form) this.bindForm();
 
-    const needsData = this.hasActiveState() || (!previewDisabled() && Object.keys(readOverlay().changes).length > 0);
-    if (needsData) this.refresh();
+    this.start();
     window.addEventListener(CHANGE_EVENT, () => this.refresh());
     window.addEventListener('popstate', () => {
       if (!this.config.syncUrl) return;
       this.readUrl();
       this.refresh({ keepPage: true });
     });
+  }
+
+  async start() {
+    if (this.config.syncUrl) {
+      await translateLegacyUrl(this.base);
+      this.readUrl();
+    }
+    const needsData = this.hasActiveState() || (!previewDisabled() && Object.keys(readOverlay().changes).length > 0);
+    if (needsData) this.refresh();
   }
 
   hasActiveState() {
@@ -220,6 +227,33 @@ class Publist {
     const reset = this.form.querySelector('.tp-reset');
     if (reset) reset.hidden = !FILTER_KEYS.some((k) => this.state[k]);
   }
+}
+
+/**
+ * Links into the old WordPress site use teachPress' numeric IDs
+ * (?tgid=2&auth=189&yr=2024&limit=2). Rewrite them to the readable
+ * parameters this site uses so old bookmarks and citations keep working.
+ */
+async function translateLegacyUrl(base) {
+  const params = new URLSearchParams(location.search);
+  const legacy = ['tgid', 'auth', 'yr', 'usr', 'limit', 'tsr'].filter((k) => params.has(k));
+  if (!legacy.length) return;
+  let ids = { tags: {}, authors: {} };
+  if (params.get('tgid') || params.get('auth')) {
+    try {
+      ids = await (await fetch(`${base}/assets/js/teachpress-ids.json`)).json();
+    } catch { /* fall back to dropping the unknown IDs */ }
+  }
+  const next = new URLSearchParams();
+  for (const [k, v] of params) if (!legacy.includes(k) && v) next.set(k, v);
+  if (params.get('yr')) next.set('year', params.get('yr') === '0000' ? '0' : params.get('yr'));
+  if (ids.tags[params.get('tgid')]) next.set('tag', ids.tags[params.get('tgid')]);
+  const author = ids.authors[params.get('auth')];
+  if (author) next.set('author', author);
+  if (params.get('tsr')) next.set('q', params.get('tsr'));
+  if (Number(params.get('limit')) > 1) next.set('page', params.get('limit'));
+  const qs = next.toString();
+  history.replaceState(null, '', `${location.pathname}${qs ? `?${qs}` : ''}${location.hash === '#tppubs' ? '' : location.hash}`);
 }
 
 export function initPublists() {

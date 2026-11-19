@@ -2,8 +2,8 @@
 
 A static rebuild of [pracsys.cs.rutgers.edu](https://pracsys.cs.rutgers.edu/) — Prof. Kostas Bekris' robotics group at Rutgers — that runs on GitHub Pages with no server, plus a browser-based **publication editor** so the lab can add and update papers without touching code.
 
-- **Live site:** https://sumanth-tangirala.github.io/pracsys-website/
-- **Publication editor:** https://sumanth-tangirala.github.io/pracsys-website/admin/
+- **Live site:** https://www.sumanthtangirala.com/pracsys-website/
+- **Publication editor:** https://www.sumanthtangirala.com/pracsys-website/admin/
 
 ## What's here
 

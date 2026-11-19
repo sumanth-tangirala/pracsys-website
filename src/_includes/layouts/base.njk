@@ -10,6 +10,7 @@
 <meta property="og:title" content="{% if title and not isHome %}{{ title | striptags }} &ndash; {% endif %}{{ site.title }}">
 <meta property="og:description" content="{{ (description or site.description) | striptags }}">
 <meta name="theme-color" content="#dd3333">
+{% if site.noindex %}<meta name="robots" content="noindex">{% endif %}
 <link rel="icon" href="{{ site.favicon }}" sizes="32x32">
 <link rel="icon" href="/uploads/2024/11/cropped-rutgers-favicon.001-1-192x192.png" sizes="192x192">
 <link rel="apple-touch-icon" href="{{ site.appleIcon }}">
