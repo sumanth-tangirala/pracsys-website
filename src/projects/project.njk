@@ -1,0 +1,16 @@
+---
+layout: layouts/page.njk
+fullWidth: true
+pagination:
+  data: projects
+  size: 1
+  alias: project
+permalink: "/projects/{{ project.slug }}/"
+eleventyComputed:
+  title: "{{ project.title }}"
+  cover: "{{ project.cover }}"
+  description: "{{ project.title }} — research project of the PRACSYS Lab at Rutgers University."
+---
+{% include "projects/" + project.slug + ".html" %}
+<h2>Publications:</h2>
+{% publist publications, project.filter, { idPrefix: 'pr' } %}

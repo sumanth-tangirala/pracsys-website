@@ -1,0 +1,34 @@
+---
+permalink: /admin/
+eleventyExcludeFromCollections: true
+---
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Publication editor · PRACSYS Lab</title>
+<link rel="icon" href="{{ site.favicon }}" sizes="32x32">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Raleway:wght@500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css">
+<link rel="stylesheet" href="/assets/css/teachpress.css">
+<link rel="stylesheet" href="/assets/css/admin.css">
+<script>window.PRACSYS_BASE = {{ env.pathPrefix | json | safe }};</script>
+<script type="application/json" id="admin-config">{
+  "repo": {{ site.repo | json | safe }},
+  "branch": {{ site.branch | json | safe }},
+  "projects": {{ projects | json | safe }},
+  "members": {{ members.current | json | safe }}
+}</script>
+</head>
+<body class="adm-page">
+<div id="admin-app" class="adm-app">
+  <noscript><div class="adm-login"><div class="adm-login-card"><h1>Publication editor</h1><p>The editor needs JavaScript. Please enable it and reload.</p></div></div></noscript>
+</div>
+<script type="module" src="/assets/js/admin/app.js"></script>
+</body>
+</html>

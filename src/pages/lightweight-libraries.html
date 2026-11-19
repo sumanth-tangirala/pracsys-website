@@ -1,0 +1,37 @@
+---
+title: "Lightweight Libraries"
+permalink: /lightweight-libraries/
+layout: layouts/page.njk
+sidebar: true
+---
+<p>Below you can find information regarding software packages that our research group has released or can provide upon request:</p>
+<ul>
+<li><a href="#sparserrt">Stable Sparse RRT (SST): Efficient Asymptotically Near-Optimal Kinodynamic Motion Planning</a></li>
+<li><a href="#pushswap">Multi-agent Path Finding: Push and Swap code</a></li>
+<li><a href="#sparscode">Sparse Representations for Motion Planning: SPARS and SPARS 2 available on OMPL</a></li>
+<li><a href="#pracsyscode">PRACSYS software: An Extensible Architecture for Composing Motion Controllers, Motion Planners and Task Planners</a></li>
+</ul>
+<h2><strong><a id="sparserrt" name="sparserrt"></a><a href="http://pracsyslab.org/sst_software">Stable Sparse RRT (SST): Efficient Asymptotically Near-Optimal Kinodynamic Motion Planning</a></strong></h2>
+<p align="justify">We have developed the <a href="http://pracsyslab.org/sst_wafr_paper" target="publication">Stable Sparse-RRT (SST)</a> algorithm, which provides favorable properties for systems where a steering function (BVP solver) may not be available, while being highly efficient. It can be shown that SST is asymptotically near-optimal and with a small modification (SST*) it can also provide asymptotic optimality for kinodynamic problems under some mild assumptions. In addition, SST maintains a sparse data structure, where the number of nodes stored in their trees is significantly lower than RRT providing computational benefits. More details and a link to the codebase can be found under the <a href="http://pracsyslab.org/sst_software">SST webpage</a>.</p>
+<h2><a id="pushswap" name="pushswap"></a><strong>Multi-agent Path Finding: Push and Swap code</strong></h2>
+<p align="justify">Our efforts in the area of <a href="http://www.pracsyslab.org/multirobot_path_planning" target="multirobot_path_planning">Complete and Tractable Multi-Robot Path Planning</a> started in 2011 with an algorithm called <a href="http://www.pracsyslab.org/node/11" target="push_swap_iros">Push and Swap</a>, which has polynomial running time and is complete but suboptimal for the multi-agent path finding problem. The algorithm has attracted attention and we received multiple requests for the source code. Since 2011 <a href="http://ryanluna.com/" target="ryan_luna">Ryan Luna </a>has continued working on optimizing this implementation, in collaboration with <a href="http://www.pracsyslab.org/krontiris" target="athanasios_krontiris">Athanasios Krontiris</a> and <a href="http://www.pracsyslab.org/bekris" target="kostas_bekris">Kostas Bekris</a>.</p>
+<p><a href="https://bitbucket.org/pracsys/pushandswap" target="push_and_swap_code">Download the latest version of the original Push and Swap algorithm.</a></p>
+<p>The group has also worked on showing the relation between such <a href="http://www.pracsyslab.org/node/92" target="pebble_motion">efficient and complete but suboptimal planners</a> and algorithmic contributions on the pebble motion problem. We will soon release the code that provides implementations for multiple variations of these methods.</p>
+<p>The available code for Push and Swap above provides sequential solutions, i.e., where only one agent moves at a time. There is also work on <a href="http://www.pracsyslab.org/node/3" target="parallel_push_and_swap">a parallel version of Push and Swap</a>. The implementation is not as optimized yet but we can provide it upon request.</p>
+<h2><a id="sparscode" name="sparscode"></a><strong>Sparse Representations for Motion Planning: SPARS and SPARS 2 available on OMPL</strong></h2>
+<p align="justify"><a href="http://www.pracsyslab.org/roadmap_spanners" target="spars_website">Asymptotically Near-Optimal Roadmap-Based Planners SPARS and SPARS2</a> have been released as part of the <a href="http://ompl.kavrakilab.org/index.html" target="ompl">Open Motion Planning Library</a> maintained by the <a href="http://www.kavrakilab.org/" target="kavraki_lab">Physical and Biological Computing Group</a> at Rice University. The benefit of these methods is that they correspond to sparse motion planning data structures that can be queried and communicated efficiently, while at the same time they are also able to provide guarantees regarding the quality of the resulting paths.</p>
+<p><a href="http://ompl.kavrakilab.org/download.html" target="ompl">Download the latest version of OMPL.</a></p>
+<p>The code is an implementation provided by <a href="http://www.pracsyslab.org/dobson" target="andrew_dobson">Andrew Dobson</a>. You can find SPARS and SPARS 2 under the <a href="http://ompl.kavrakilab.org/planners.html">list of supported planners by OMPL</a>.</p>
+<h2><a id="pracsyscode" name="pracsyscode"></a><strong>PRACSYS software: An Extensible Architecture for Composing Motion Controllers, Motion Planners and Task Planners</strong></h2>
+<p>Our research group is working on a common software package that has been utilized for a variety of research projects over the last few years. Our objective is to provide an extensible software architecture so that the integration of low-level motion controllers with motion planners and higher-level task planers is streamlined.</p>
+<p>An earlier version of the code is available through a <a href="http://sourceforge.net/projects/pracsys" target="pracsys_sourceforge">Sourceforge repository</a>, which corresponds to our paper at <a href="http://www.pracsyslab.org/node/63" target="simpar_paper">SIMPAR 2012</a>.</p>
+<p>We have since significantly revised and extended the functionality of our software package. Our current main focus is on the definition of proper interfaces for composing motion and task planners. Feel free to contact us if you are interested in the latest version and we will share a Mercurial repository.</p>
+<p>Examples of publications that have utilized this software platform include the following:</p>
+<ul>
+<li><a href="http://www.pracsyslab.org/node/96" target="sparse_rrt_iros_paper">Efficient Sampling-Based Motion Planning With Asymptotic Near-Optimality Guarantees For Systems With Dynamics, IROS 2013</a></li>
+<li><a href="http://www.pracsyslab.org/node/92" target="socs_13_paper">From Feasibility Tests To Path Planners For Multi-Agent Pathfinding, SOCS 2013</a></li>
+<li><a href="http://www.pracsyslab.org/node/93" target="aaai_13_workshop">Minimizing Conflicts Between Moving Agents Over A Set Of Non-Homotopic Paths Through Regret Minimization, In AAAI 2013 Workshop on Intelligent Robotic Systems</a></li>
+<li><a href="http://www.pracsyslab.org/node/2" target="aamas_12_paper">Maintaining Team Coherence Under The Velocity Obstacle Framework”, In AAMAS 2012</a></li>
+<li><a href="http://www.pracsyslab.org/node/4" target="ICRA_12">Multi-Level Formation Roadmaps For Collision-Free Dynamic Shape Changes With Non-Holonomic Teams, In ICRA 2012</a></li>
+<li><a href="http://www.pracsyslab.org/node/18" target="iros_11">Using Minimal Communication To Improve Decentralized Conflict Resolution For Non-Holonomic Vehicles, In IROS 2011</a></li>
+</ul>

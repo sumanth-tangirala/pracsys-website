@@ -1,0 +1,11 @@
+---
+layout: layouts/page.njk
+title: Papers
+permalink: /papers/
+fullWidth: true
+bodyClass: page papers-page
+description: Publications of the PRACSYS group at Rutgers University, filterable by year, type, author and topic.
+---
+<div id="tppubs">
+{% publist publications, {}, { filters: true, showTags: true, syncUrl: true, idPrefix: 'p' } %}
+</div>

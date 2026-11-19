@@ -1,0 +1,120 @@
+---
+layout: layouts/base.njk
+isHome: true
+bodyClass: home
+permalink: /
+---
+<section id="hero" class="hero-slideshow-wrapper">
+  <div class="hero-bg" aria-hidden="true"><img src="{{ site.hero.image }}" alt=""></div>
+  <div class="container">
+    <div class="hero__content hero-content-style1">
+      <h2 class="hero-large-text"><img src="{{ site.hero.logo }}" width="800" height="240" alt="PRACSYS πρᾶξις Lab"></h2>
+      <h4>{{ site.hero.tagline }}</h4>
+      <h5>{{ site.hero.subtitle }}</h5>
+      <div class="hero-buttons">
+        {% for b in site.hero.buttons %}<a href="{{ b.href }}" class="btn btn-{{ b.style }} btn-lg">{{ b.label }}</a>{% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<main id="main" class="site-main" role="main">
+  <section id="team" class="section-team section-padding section-meta onepage-section">
+    <div class="container">
+      <div class="section-title-area"><h2 class="section-title">Team</h2></div>
+      <div class="team-members">
+        {% for m in members.current %}
+        <div class="team-member">
+          <div class="member-thumb">
+            <a href="/members/{{ m.slug }}/" tabindex="-1" aria-hidden="true"><img src="{{ m.photo }}" alt="" loading="lazy" width="300" height="300"></a>
+            {% if m.gridLinks.length %}
+            <div class="member-profile">
+              {% for l in m.gridLinks %}
+                {% if l == 'website' %}<a href="{{ m.links.website }}" target="_blank" rel="noopener" aria-label="{{ m.name }}'s website"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-globe fa-stack-1x fa-inverse"></i></span></a>{% endif %}
+                {% if l == 'linkedin' %}<a href="{{ m.links.linkedin }}" target="_blank" rel="noopener" aria-label="{{ m.name }} on LinkedIn"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fab fa-linkedin-in fa-stack-1x fa-inverse"></i></span></a>{% endif %}
+                {% if l == 'email' %}<a href="mailto:{{ m.links.email | obfuscateEmail | safe }}" aria-label="Email {{ m.name }}"><span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="far fa-envelope fa-stack-1x fa-inverse"></i></span></a>{% endif %}
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+          <div class="member-info">
+            <h5 class="member-name"><a href="/members/{{ m.slug }}/">{{ m.name }}</a></h5>
+            <span class="member-position">{{ m.position }}</span>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section id="cta" class="section-cta section-padding section-inverse onepage-section">
+    <div class="container cta-inner">
+      <h2 class="cta-heading">{{ site.cta.text }}</h2>
+      <a href="{{ site.cta.href }}" class="btn btn-theme-primary-outline">{{ site.cta.button }}</a>
+    </div>
+  </section>
+
+  <section id="software" class="section-features section-padding section-meta onepage-section">
+    <div class="container">
+      <div class="section-title-area"><h2 class="section-title">Software</h2></div>
+      <div class="features-row">
+        {% for s in site.software %}
+        <div class="feature-item">
+          <div class="feature-media">
+            <a href="{{ s.href }}" title="{{ s.label }}" tabindex="-1" aria-hidden="true"><span class="fa-stack fa-5x"><i class="fa fa-circle fa-stack-2x icon-background-default"></i><i class="feature-icon fa {{ s.icon }} fa-stack-1x"></i></span></a>
+          </div>
+          <h4><a href="{{ s.href }}">{{ s.label }}</a></h4>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section id="project-categories" class="section-project-categories section-padding section-inverse onepage-section">
+    <span id="projects" class="anchor-alias" aria-hidden="true"></span>
+    <div class="container">
+      <div class="section-title-area"><h2 class="section-title">Projects</h2></div>
+      <div class="project-categories">
+        {% for p in projects %}
+        <a href="/projects/{{ p.slug }}/" class="project-category">
+          <img src="{{ p.thumb }}" alt="" width="300" height="194" loading="lazy">
+          <h5 class="project-small-title">{{ p.cardTitle }}</h5>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section-contact section-padding section-meta onepage-section">
+    <div class="container">
+      <div class="section-title-area"><h2 class="section-title">Contact</h2></div>
+      <div class="contact-row">
+        <div class="contact-col">
+          <div class="address-box">
+            <h3>{{ site.contact.name }}</h3>
+            <div class="address-contact">
+              <span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-map-marker-alt fa-stack-1x fa-inverse"></i></span>
+              <div class="address-content">{{ site.contact.address }}</div>
+            </div>
+            <div class="address-contact">
+              <span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-phone fa-stack-1x fa-inverse"></i></span>
+              <div class="address-content"><a href="tel:+1{{ site.contact.phone | replace(' ', '') | replace('-', '') }}">{{ site.contact.phone }}</a></div>
+            </div>
+            <div class="address-contact">
+              <span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="far fa-envelope fa-stack-1x fa-inverse"></i></span>
+              <div class="address-content"><a class="js-email" data-user="{{ site.contact.emailUser }}" data-domain="{{ site.contact.emailDomain }}" href="#contact">{{ site.contact.emailUser }}\AT\{{ site.contact.emailDomain }}</a></div>
+            </div>
+            <div class="address-contact">
+              <span class="fa-stack"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-fax fa-stack-1x fa-inverse"></i></span>
+              <div class="address-content">{{ site.contact.fax }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="contact-col" id="map">
+          <iframe class="contact-map" title="Map: {{ site.contact.address }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q={{ site.contact.mapQuery | urlencode }}&amp;output=embed"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

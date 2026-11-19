@@ -1,0 +1,34 @@
+---
+layout: layouts/base.njk
+bodyClass: single-post
+---
+<div class="content-inner has-sidebar">
+  <div class="container">
+    <main id="main" class="site-main content-area">
+      <article class="post">
+        <header class="entry-header">
+          <h1 class="entry-title">{{ title }}</h1>
+          <div class="entry-meta"><span class="posted-on"><time datetime="{{ date | isoDate }}">{{ date | readableDate }}</time></span> <span class="cat-links">in <a href="/news/">Pracsys News</a></span></div>
+        </header>
+        <div class="entry-content">
+{{ content | safe }}
+        </div>
+        <nav class="post-navigation" aria-label="Posts">
+          {% set prev = collections.news | getPreviousCollectionItem %}
+          {% set next = collections.news | getNextCollectionItem %}
+          {% if prev %}<div class="nav-previous"><a href="{{ prev.url }}" rel="prev"><span class="meta-nav">&larr;</span> {{ prev.data.title }}</a></div>{% endif %}
+          {% if next %}<div class="nav-next"><a href="{{ next.url }}" rel="next">{{ next.data.title }} <span class="meta-nav">&rarr;</span></a></div>{% endif %}
+        </nav>
+      </article>
+    </main>
+    <div id="secondary" class="widget-area sidebar" role="complementary">
+      {% include "partials/sidebar.njk" %}
+      <aside class="widget">
+        <h2 class="widget-title">Recent News</h2>
+        <ul class="recent-posts">
+          {% for p in collections.news | reverse %}{% if loop.index <= 5 %}<li><a href="{{ p.url }}">{{ p.data.title }}</a></li>{% endif %}{% endfor %}
+        </ul>
+      </aside>
+    </div>
+  </div>
+</div>

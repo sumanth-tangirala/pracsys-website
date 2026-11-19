@@ -1,0 +1,86 @@
+---
+title: "Datasets"
+permalink: /datasets/
+layout: layouts/page.njk
+sidebar: true
+---
+<p>Below you can find information regarding data sets that our research group has released or can provide upon request:</p>
+<h2><strong>Rutgers Underactuated-hand Manipulation dataset (RUM):</strong></h2>
+<p>Underactuated hands with compliant fingers offer an appealing grasping solution due to their adaptability to objects of uncertain size and shape. Therefore, they enable stable, robust grasps without tactile sensing or prior planning, using open-loop control. Furthermore, open-source underactuated robotic hands, which we rely on in our work, are easy to fabricate and modify. However, due to uncertainties in the manufacturing process, the hands differ in size, weight, friction, and inertia.</p>
+<p>Consequently, precise analytical models for such hands are usually unavailable as they are hard to derive. <span style="margin: 0px;padding: 0px">Thus, as described in a <a href="https://people.cs.rutgers.edu/~kb572/pubs/Learning_a_State_Transition_Model.pdf" rel="noopener noreferrer" target="_blank">previous</a> publication, data-based modeling enables somewhat accurate predictions and can be used for motion planning and closed-loop control.</span> However, such an approach in the context of adaptive hands is rather novel and has not been extensively explored. Therefore, we wish to contribute a set of task benchmarks for standard performance evaluation and further development, along with a benchmarking platform based on simulations and on real data.</p>
+<p>The Rutgers Underactuated-hand Manipulation (RUM) dataset is a wide set of real data collected from several underactuated hands (the <a href="https://www.eng.yale.edu/grablab/openhand/">Model-T42 and Model-O</a>) across various types of objects. The data comprises approximately 300,000 transition points for each object. Furthermore, each object comes with 10 long validation paths that provide substantial coverage of the hand’s workspace and also involve frequent changes of action.</p>
+<figure class="wp-caption alignleft" style="width: 291px"><img alt="Model-T42" height="190" src="https://www.eng.yale.edu/grablab/openhand/images/hand%20-%20t42.jpg" width="291"/><figcaption class="wp-caption-text">Model-T42</figcaption></figure>
+<figure class="wp-caption alignleft" style="width: 253px"><img alt="Model-O" height="190" src="https://www.eng.yale.edu/grablab/openhand/images/hand%20-%20o.jpg" width="253"/><figcaption class="wp-caption-text">Model-O</figcaption></figure>
+<p>Here we provide links to download the dataset, separated by hand model and data category:</p>
+<p><a href="https://www.cs.rutgers.edu/~kb572/adaptive_hand_data/RUM.zip">Entire Dataset</a></p>
+<p><a href="https://www.cs.rutgers.edu/~kb572/adaptive_hand_data/All_Models.zip">Only Model-O and T-42 Files</a></p>
+<h3><b>Model-O</b></h3>
+<p><strong>Action Sequences</strong>: <a href="https://www.cs.rutgers.edu/~kb572/adaptive_hand_data/Model_O/">Data</a><strong> </strong></p>
+<h3><b>Model-T42</b></h3>
+<p><strong>Transition Data: </strong><a href="https://www.cs.rutgers.edu/~kb572/adaptive_hand_data/Model_T42/transition_data/discrete/">Discrete</a>, <a href="https://www.cs.rutgers.edu/~kb572/adaptive_hand_data/Model_T42/transition_data/continuous/">Continuous</a></p>
+<p><strong>Failure Data: </strong><a href="https://www.cs.rutgers.edu/~kb572/adaptive_hand_data/Model_T42/failure_data/discrete/">Discrete</a>, <a href="https://www.cs.rutgers.edu/~kb572/adaptive_hand_data/Model_T42/failure_data/continuous/">Continuous</a></p>
+<h3><b>Objects</b></h3>
+<p><strong>Mesh Files: </strong><a href="https://www.cs.rutgers.edu/~kb572/adaptive_hand_data/object_models">Data</a></p>
+<p><span style="margin: 0px;padding: 0px"><strong>Information on how to access the data files can be seen on the project’s </strong><a href="https://github.com/avishais/underactuated_hand_benchmarking" rel="noopener noreferrer" target="_blank"><strong>GitHub page</strong></a><strong>.</strong></span></p>
+<p><strong style="color: #333333;font-family: Raleway, Helvetica, Arial, sans-serif;font-size: 2rem">YCBInEOAT Dataset</strong></p>
+<p>Due to the lack of suitable dataset about RGBD-based 6D pose tracking in robotic manipulation, a novel dataset is developed. It has these key attributes:</p>
+<ul>
+<li>Real manipulation tasks</li>
+<li>3 kinds of end-effectors</li>
+<li>5 YCB objects</li>
+<li>9 videos for evaluation, 7449 RGBD in total</li>
+<li>Ground-truth poses annotated for each frame</li>
+<li>Forward-kinematics recorded</li>
+<li>Camera extrinsic parameters calibrated</li>
+</ul>
+<p><img src="https://github.com/wenbowen123/iros20-6d-pose-tracking/raw/master/media/manipulation1.gif" width="480"/></p>
+<p><a href="https://github.com/wenbowen123/iros20-6d-pose-tracking">Dataset Page</a></p>
+<h2><strong>Object Pose Estimation In Adaptive Hands Dataset</strong></h2>
+<p>Many manipulation tasks, such as placement or within-hand manipulation, require the object’s pose relative to a robot hand. The task is difficult when the hand significantly occludes the object. It is especially hard for adaptive hands, for which it is not easy to detect the finger’s configuration.</p>
+<p><a href="https://github.com/wenbowen123/icra20-hand-object-pose">Dataset Page</a></p>
+<ul>
+<li><a href="https://archive.cs.rutgers.edu/archive/a/2020/pracsys/Bowen/icra2020/auto_collect.tar.gz" rel="nofollow">real world data</a> (986 samples) : Groundtruth 6D pose.</li>
+<li><a href="https://archive.cs.rutgers.edu/archive/a/2020/pracsys/Bowen/icra2020/simulation_data.tar.gz" rel="nofollow">synthetic data</a> (12000 samples) :
+<ol>
+<li>Groundtruth 6D pose of everything including every finger.</li>
+<li>Groundtruth semantic segmentation of every link of the hand and object.</li>
+<li>Additional rendered images of objects under the same pose but not occluded by hand.</li>
+</ol>
+</li>
+<li><a href="https://archive.cs.rutgers.edu/archive/a/2020/pracsys/Bowen/icra2020/meshes.tar.gz" rel="nofollow">object and hand CAD models, computed PPF features</a>.</li>
+</ul>
+<p><img alt="" src="https://github.com/wenbowen123/icra20-hand-object-pose/raw/master/media/cuboid1.jpg"/></p>
+<p><img alt="" src="https://github.com/wenbowen123/icra20-hand-object-pose/raw/master/media/sim.jpg"/></p>
+<h2><a href="https://robotics.cs.rutgers.edu/pracsys/rutgers-apc-rgb-d-dataset/"><strong>Rutgers APC RGB-D Dataset</strong></a></h2>
+<p align="justify">To better equip the research community in evaluating and improving robotic perception solutions for warehouse picking challenges, the PRACSYS lab at Rutgers University provides <a href="https://robotics.cs.rutgers.edu/pracsys/rutgers-apc-rgb-d-dataset/">a new rich RGB-D data set for warehouse picking</a> and software for utilizing it. The dataset contains 10,368 depth and RGB registered images, complete with hand-annotated 6DOF poses for 24 of the Amazon Picking Challenge (APC) objects (mead_index_cards excluded). Also provided are 3D mesh models of the 25 APC objects, which may be used for training of recognition algorithms.</p>
+<h2><strong>Rutgers Extended RGBD dataset</strong></h2>
+<p>Dataset download link: <a href="https://drive.google.com/drive/folders/1aDYq3DFT4fRg_9_LN_1b1RFjcZ7QxPjz?usp=sharing">download</a></p>
+<p>For each scene in the dataset, we share:</p>
+<ul>
+<li>RGB Image</li>
+<li>Depth Image</li>
+<li>Segmentation mask</li>
+<li>Parameters
+<ul>
+<li>camera_pose: pose of the camera in a global frame.</li>
+<li>camera_intrinsics: intrinsic parameters of the camera.</li>
+<li>rest_surface: pose of the resting surface such as a table or shelf bin.</li>
+<li>dependency_order: physical and visual dependency of objects upon each other.</li>
+<li>pose: ground-truth object pose in a global frame.</li>
+</ul>
+</li>
+</ul>
+<h2><strong>Autonomous data generation to train CNNs for object segmentation</strong></h2>
+<p>The training dataset is generated by physical simulation of the setup in which the robot operates. The tool we developed for autonomous data generation, labeling and training is shared below.</p>
+<p>Dataset Generation toolbox: <a href="https://github.com/cmitash/physics-scene-rendering-vision">https://github.com/cmitash/physim-dataset-generator</a></p>
+<p>Learnt models for object segmentation<br/>
+Faster-RCNN (VGG16) Physics Simulation + Self Learning (Shelf): <a href="https://drive.google.com/file/d/0B2jGkT--yHSVOHJmenlvVFJVb1U/view?usp=sharing">download</a><br/>
+Faster-RCNN (VGG16) Physics Simulation + Self Learning (Table-top): <a href="https://drive.google.com/file/d/0B2jGkT--yHSVYXpzNXRnUktpS0E/view?usp=sharing">download</a></p>
+<h2><strong>6D pose hypotheses dataset for manipulation planning in table setup</strong></h2>
+<p>The 6D pose hypotheses dataset for manipulation planning is generated by</p>
+<p>(1) Image taking via an Azure Kinetic camera</p>
+<p>(2) A fully convolutional neural network which returns object classification and segmentation probability maps</p>
+<p>(2) A geometric model matching process which returns pose hypotheses for each detected object</p>
+<p>Examples of scenes (The 1st row shows the RGB images and the 2nd row shows the visualization of pose hypotheses in physics simulator PyBullet)</p>
+<p><img alt="" class="alignnone" height="368" src="/uploads/2024/11/6D-Poses-Dataset-1-300x194.png" width="569"/></p>
+<p>The dataset can be referenced <a href="https://drive.google.com/drive/u/0/folders/1cnoJmizXQjNcXduZp_vlb0U4v4jknhAT">here</a>.</p>

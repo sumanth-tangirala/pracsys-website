@@ -1,0 +1,26 @@
+---
+layout: layouts/base.njk
+---
+{% if cover %}
+<div class="page-header page--cover" style="background-image: url('{{ cover | htmlBaseUrl }}')">
+  <div class="container"><h1 class="entry-title">{{ title }}</h1></div>
+</div>
+{% elif not hideTitleBar %}
+<div class="page-header">
+  <div class="container"><h1 class="entry-title">{{ title }}</h1></div>
+</div>
+{% endif %}
+<div class="content-inner{% if sidebar %} has-sidebar{% endif %}{% if fullWidth %} full-width{% endif %}">
+  <div class="container">
+    <main id="main" class="site-main content-area">
+      <article class="entry-content">
+{{ content | safe }}
+      </article>
+    </main>
+    {% if sidebar %}
+    <div id="secondary" class="widget-area sidebar" role="complementary">
+      {% include "partials/sidebar.njk" %}
+    </div>
+    {% endif %}
+  </div>
+</div>

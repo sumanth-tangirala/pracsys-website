@@ -1,0 +1,39 @@
+<footer id="colophon" class="site-footer" role="contentinfo">
+  <div id="footer-widgets" class="footer-widgets section-padding">
+    <div class="container">
+      <div class="footer-row">
+        <div class="footer-column footer-col-4">
+          <aside class="footer-widget">
+            <h2 class="widget-title">About Pracsys</h2>
+            <div class="textwidget"><p>PRACSYS stands for &ldquo;Physics-aware Research for Autonomous Computational SYStems&rdquo;; pronounced like the Ancient Greek word for <a href="http://en.wikipedia.org/wiki/Praxis_%28process%29" target="_blank" rel="noopener">&ldquo;action&rdquo; (πρᾱξις)</a>, which referred to activity engaged in by free men. Aristotle held that there were three basic activities of man that corresponded to three types of knowledge: theoria (theoretical), poiesis (poetic), and praxis (practical), to which the end goal was action.</p></div>
+          </aside>
+        </div>
+        <div class="footer-column footer-col-2">
+          <aside class="footer-widget">
+            <h2 class="widget-title">Openings</h2>
+            <div class="textwidget"><p>{% for o in site.openings %}<a href="{{ o.href }}">{{ o.label }}</a>{% if not loop.last %}<br>{% endif %}{% endfor %}</p></div>
+          </aside>
+        </div>
+        <div class="footer-column footer-col-3">
+          <aside class="footer-widget">
+            <h2 class="widget-title">Funding Agencies</h2>
+            <div class="textwidget">
+              <p>{{ site.funding.disclaimer }}</p>
+              <p>Federal: {% for f in site.funding.federal %}{% if f.href %}<a href="{{ f.href }}" target="_blank" rel="noopener">{{ f.label }}</a>{% else %}{{ f.label }}{% endif %}{% if not loop.last %}, {% endif %}{% endfor %}<br>
+              Corporate: {{ site.funding.corporate }}</p>
+            </div>
+          </aside>
+        </div>
+        <div class="footer-column footer-col-3">
+          <aside class="footer-widget">
+            <h2 class="widget-title">Affiliations</h2>
+            <div class="textwidget"><p>{% for a in site.affiliations %}<a href="{{ a.href }}" target="_blank" rel="noopener">{{ a.label }}</a>{% if not loop.last %}<br>{% endif %}{% endfor %}</p></div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="site-info">
+    <div class="container">{{ site.copyright }}<span class="site-info-admin"> &middot; <a href="/admin/" rel="nofollow">Lab admin</a></span></div>
+  </div>
+</footer>

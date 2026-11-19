@@ -1,0 +1,19 @@
+---
+layout: layouts/page.njk
+title: News
+permalink: /news/
+sidebar: true
+bodyClass: page blog
+---
+<div class="posts-list">
+{% for post in collections.news | reverse %}
+  <article class="list-article">
+    {% if post.data.image %}<div class="list-article-thumb"><a href="{{ post.url }}" tabindex="-1" aria-hidden="true"><img src="{{ post.data.image }}" alt="" loading="lazy" width="300" height="150"></a></div>{% endif %}
+    <div class="list-article-content">
+      <div class="list-article-meta"><a href="/news/">Pracsys News</a></div>
+      <header class="entry-header"><h2 class="entry-title"><a href="{{ post.url }}" rel="bookmark">{{ post.data.title }}</a></h2></header>
+      <div class="entry-excerpt"><p>{{ post.data.excerpt }}</p></div>
+    </div>
+  </article>
+{% endfor %}
+</div>

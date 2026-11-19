@@ -1,0 +1,580 @@
+{
+  "current": [
+    {
+      "slug": "kostas-bekris",
+      "name": "Kostas Bekris",
+      "title": "Kostas Bekris",
+      "position": "Professor",
+      "group": "faculty",
+      "photo": "/uploads/2019/02/kostas_bekris-300x300-300x300.png",
+      "authors": [
+        "Bekris, K"
+      ],
+      "showPublications": false,
+      "links": {},
+      "note": "",
+      "gridLinks": [],
+      "current": true
+    },
+    {
+      "slug": "ewerton-r-vieira",
+      "name": "Ewerton R. Vieira",
+      "title": "Ewerton R Vieira",
+      "position": "Postdoctoral Researcher",
+      "group": "postdoc",
+      "photo": "/uploads/2024/12/ewerton-1.jpg",
+      "note": "Primary advisor Prof. Konstantin Mischaikow (Rutgers – Math)",
+      "authors": [
+        "Vieira, E"
+      ],
+      "links": {
+        "website": "https://ewerton-vieira.github.io/"
+      },
+      "showPublications": true,
+      "gridLinks": [],
+      "current": true
+    },
+    {
+      "slug": "tzvika-geft",
+      "name": "Tzvika Geft",
+      "title": "Tzvika Geft",
+      "position": "Postdoctoral Researcher",
+      "group": "postdoc",
+      "photo": "/uploads/2024/12/300x300.jpg",
+      "note": "Co-advising with Dr. Jingjin Yu",
+      "authors": [
+        "Geft, T"
+      ],
+      "links": {
+        "website": "https://sites.google.com/view/tzvikageft/home"
+      },
+      "showPublications": true,
+      "gridLinks": [
+        "website"
+      ],
+      "current": true
+    },
+    {
+      "slug": "edgar-granados",
+      "name": "Edgar Granados",
+      "title": "Edgar Granados",
+      "position": "PhD Student",
+      "group": "phd",
+      "photo": "/uploads/2024/11/edgar.png",
+      "authors": [
+        "Granados, E"
+      ],
+      "links": {
+        "website": "https://edgargranados.com"
+      },
+      "note": "",
+      "showPublications": true,
+      "gridLinks": [],
+      "current": true
+    },
+    {
+      "slug": "nakhimovich-daniel",
+      "name": "Daniel Nakhimovich",
+      "title": "Daniel Nakhimovich",
+      "position": "PhD Student",
+      "group": "phd",
+      "photo": "/uploads/2024/11/daniel-1-e1778875510839.png",
+      "authors": [
+        "Nakhimovich, D"
+      ],
+      "links": {
+        "website": "https://dance.offinto.space/"
+      },
+      "note": "",
+      "showPublications": true,
+      "gridLinks": [
+        "website"
+      ],
+      "current": true
+    },
+    {
+      "slug": "isidoros-marougkas",
+      "name": "Isidoros Marougkas",
+      "title": "Isidoros Marougkas",
+      "position": "PhD Student",
+      "group": "phd",
+      "photo": "/uploads/2025/02/result_Ismarou.jpeg",
+      "note": "Co-advising with Dr. Abdeslam Boularias",
+      "authors": [
+        "Marougkas, I"
+      ],
+      "links": {
+        "linkedin": "https://www.linkedin.com/in/isidoros-marougkas"
+      },
+      "showPublications": true,
+      "gridLinks": [],
+      "current": true
+    },
+    {
+      "slug": "nelson-chen",
+      "name": "Nelson Chen",
+      "title": "Nelson Chen",
+      "position": "PhD Student",
+      "group": "phd",
+      "photo": "/uploads/2024/11/nelson-1.jpg",
+      "note": "Co-advising with Dr. Mridul Aanjaneya",
+      "authors": [
+        "Chen, N"
+      ],
+      "links": {
+        "website": "https://nchen9191.github.io/"
+      },
+      "showPublications": true,
+      "gridLinks": [
+        "website"
+      ],
+      "current": true
+    },
+    {
+      "slug": "dhruv-metha-ramesh",
+      "name": "Dhruv Metha Ramesh",
+      "title": "Dhruv Metha Ramesh",
+      "position": "PhD Student",
+      "group": "phd",
+      "photo": "/uploads/2024/11/dhruv.jpg",
+      "note": "Co-advising with Dr. Abdeslam Boularias",
+      "authors": [
+        "Ramesh, D"
+      ],
+      "links": {
+        "website": "https://dhruvmetha.github.io/"
+      },
+      "showPublications": true,
+      "gridLinks": [
+        "website"
+      ],
+      "current": true
+    },
+    {
+      "slug": "patrick-meng",
+      "name": "Patrick Meng",
+      "title": "Patrick Meng",
+      "position": "PhD Student",
+      "group": "phd",
+      "photo": "/uploads/2024/11/patrick.jpg",
+      "authors": [
+        "Meng, P"
+      ],
+      "links": {},
+      "note": "",
+      "showPublications": true,
+      "gridLinks": [],
+      "current": true
+    },
+    {
+      "slug": "sumanth-tangirala",
+      "name": "Sumanth Tangirala",
+      "title": "Sumanth Tangirala",
+      "position": "PhD Student",
+      "group": "phd",
+      "photo": "/uploads/2024/11/IMG_1050-300x300-1.jpg",
+      "authors": [
+        "Tangirala, S"
+      ],
+      "links": {
+        "website": "https://sumanthtangirala.com",
+        "linkedin": "https://www.linkedin.com/in/tsumanth/",
+        "email": "sumanth.t@rutgers.edu"
+      },
+      "note": "",
+      "showPublications": true,
+      "gridLinks": [
+        "website",
+        "linkedin",
+        "email"
+      ],
+      "current": true
+    },
+    {
+      "slug": "joe-h-doerr",
+      "name": "Joe Doerr",
+      "title": "Joe H. Doerr",
+      "position": "PhD Student",
+      "group": "phd",
+      "photo": "/uploads/2024/12/joe.jpg",
+      "authors": [
+        "Doerr, J"
+      ],
+      "links": {
+        "scholar": "https://scholar.google.com/citations?user=1OeZRecAAAAJ&hl=en"
+      },
+      "note": "",
+      "showPublications": true,
+      "gridLinks": [],
+      "current": true
+    },
+    {
+      "slug": "sina-hazeghi",
+      "name": "Sina Hazeghi",
+      "title": "Sina Hazeghi",
+      "position": "Undergraduate Researcher",
+      "group": "undergrad",
+      "photo": "/uploads/2024/11/result_result__MG_9423.jpg",
+      "authors": [
+        "Hazeghi, S"
+      ],
+      "links": {
+        "website": "https://sina-haz.github.io/",
+        "linkedin": "https://www.linkedin.com/in/sina-hazeghi/",
+        "github": "https://github.com/Sina-Haz"
+      },
+      "note": "",
+      "showPublications": true,
+      "gridLinks": [
+        "website",
+        "linkedin"
+      ],
+      "current": true
+    },
+    {
+      "slug": "kevin-chen",
+      "name": "Kevin Chen",
+      "title": "Kevin Chen",
+      "position": "Undergraduate Researcher",
+      "group": "undergrad",
+      "photo": "/uploads/2024/12/kevin.jpeg",
+      "authors": [],
+      "links": {
+        "linkedin": "https://www.linkedin.com/in/kevinchen50/",
+        "github": "https://github.com/kchen50"
+      },
+      "note": "",
+      "showPublications": true,
+      "gridLinks": [],
+      "current": true
+    }
+  ],
+  "groups": [
+    {
+      "title": "Faculty",
+      "slugs": [
+        "kostas-bekris"
+      ],
+      "sep": ", "
+    },
+    {
+      "title": "Postdoctoral Researchers",
+      "slugs": [
+        "ewerton-r-vieira",
+        "tzvika-geft"
+      ]
+    },
+    {
+      "title": "Ph.D. Students",
+      "slugs": [
+        "nakhimovich-daniel",
+        "edgar-granados",
+        "isidoros-marougkas",
+        "nelson-chen",
+        "dhruv-metha-ramesh",
+        "patrick-meng",
+        "joe-h-doerr",
+        "sumanth-tangirala"
+      ]
+    },
+    {
+      "title": "Undergraduates",
+      "slugs": [
+        "kevin-chen",
+        "sina-hazeghi"
+      ]
+    }
+  ],
+  "alumni": [
+    {
+      "group": "PostDoc",
+      "people": [
+        {
+          "name": "Avishai Sintov",
+          "url": "https://avishaisintov.wordpress.com/",
+          "note": "Joined Tel-Aviv University as Assistant Professor upon completion"
+        },
+        {
+          "name": "David Surovik",
+          "url": "https://uk.linkedin.com/in/surovik",
+          "note": "Joined University of Oxford as Postdoctoral Research Associate upon completion"
+        },
+        {
+          "name": "Nicholas Stiffler",
+          "url": "https://udayton.edu/directory/artssciences/computerscience/stiffler-nicholas.php",
+          "note": "Joined University of Dayton, Ohio as Assistant Professor upon completion"
+        },
+        {
+          "name": "Brian Ricks",
+          "url": "https://ricks.io/#/",
+          "note": "Joined the University of Nebraska at Omaha as Assistant Professor upon completion"
+        }
+      ]
+    },
+    {
+      "group": "Ph.D. Students",
+      "people": [
+        {
+          "name": "Shiyang Lu",
+          "url": "https://www.linkedin.com/in/shiyang-lu-b204ab106/",
+          "note": "Joined Meta Reality Labs upon completion"
+        },
+        {
+          "name": "Aravind Sivaramakrishnan",
+          "url": "https://www.linkedin.com/in/aravindsiv/",
+          "note": "Joined Amazon Robotics upon completion"
+        },
+        {
+          "name": "Bowen Wen",
+          "url": "https://wenbowen123.github.io/",
+          "note": "Joined NVIDIA Research upon completion"
+        },
+        {
+          "name": "Rui Wang",
+          "url": "https://rui1223.github.io/",
+          "note": "Joined Diligent Robotics upon completion"
+        },
+        {
+          "name": "Kun Wang",
+          "url": "https://www.linkedin.com/in/kun-wang-75791838/",
+          "note": "Joined Amazon Robotics upon completion"
+        },
+        {
+          "name": "Chaitanya Mitash",
+          "url": "https://www.linkedin.com/in/chaitanya-mitash-65823a21/",
+          "note": "Joined Amazon Robotics upon completion"
+        },
+        {
+          "name": "Rahul Shome",
+          "url": "https://www.rahulsho.me/",
+          "note": "Joined Rice University as a postdoctoral researcher upon completion – Currently a tenure track lecturer in the School of Computing at The Australian National University"
+        },
+        {
+          "name": "Andrew Kimmel",
+          "url": "https://www.linkedin.com/in/akimmel42/",
+          "note": "Joined Amazon Robotics upon completion"
+        },
+        {
+          "name": "Zakary Littlefield",
+          "url": "https://www.linkedin.com/in/zakary-littlefield-40a01826/",
+          "note": "Joined Uber Autonomy upon completion"
+        },
+        {
+          "name": "Andrew Dobson",
+          "url": "https://www.linkedin.com/in/andrew-dobson-65590b170/",
+          "note": "Joined University of Michigan, Ann Arbor as a postdoctoral researcher upon completion"
+        },
+        {
+          "name": "Athanasios Krontiris",
+          "url": "https://www.linkedin.com/in/athanasioskrontiris",
+          "note": "Joined Samsung Strategy and Innovation Center upon completion – Later joined Google Inc."
+        }
+      ]
+    },
+    {
+      "group": "MS Students with Thesis",
+      "people": [
+        {
+          "name": "Shaojun Zhu",
+          "url": "https://sites.google.com/site/shaojunzhu1990/",
+          "note": "Joined Argo AI upon completion"
+        },
+        {
+          "name": "Zacharias Psarakis",
+          "url": "https://www.linkedin.com/in/psarakisz",
+          "note": "Joined iRobot upon completion – Later joined Nvidia"
+        },
+        {
+          "name": "Chris Kourtev",
+          "url": "https://www.linkedin.com/in/hkourtev/",
+          "note": "Joined SubUAS LLC (robotics startup) upon completion"
+        },
+        {
+          "name": "Colin Rennie",
+          "url": "https://www.linkedin.com/in/colin-m-rennie/",
+          "note": "Joined Jask upon completion – Later joined Meta"
+        },
+        {
+          "name": "Aditya Chukka",
+          "url": "https://www.linkedin.com/in/aditya-chukka/",
+          "note": "Joined Bloomberg LP upon completion"
+        },
+        {
+          "name": "Min Zhao",
+          "url": "https://www.linkedin.com/in/min-zhao-7b796915/",
+          "note": "Joined Discover upon completion"
+        },
+        {
+          "name": "Ryan Luna",
+          "url": "https://www.linkedin.com/in/ryan-luna-0034543b/",
+          "note": "Joined Rice University as a Ph.D. student upon completion – Later joined Waymo."
+        },
+        {
+          "name": "",
+          "url": "",
+          "html": "James D. Marble : Joined <a href=\"https://www.sncorp.com/\">Sierra Nevada Corporation </a>upon completion"
+        },
+        {
+          "name": "Ilias Apostolopoulos",
+          "url": "https://www.linkedin.com/in/ilias-a-80486525/",
+          "note": "Continued at the Univ. of Nevada Reno as a PhD student"
+        },
+        {
+          "name": "Yanbo Li",
+          "url": "",
+          "note": "Joined Noble Studios Inc."
+        }
+      ]
+    },
+    {
+      "group": "Undergraduates",
+      "people": [
+        {
+          "name": "Tasha Pais",
+          "url": "",
+          "note": "(Fall 2023 – Spring 2024)"
+        },
+        {
+          "name": "Joe Doerr",
+          "url": "",
+          "note": "(Fall 2023 – Spring 2024), joined research group as a PhD student"
+        },
+        {
+          "name": "Jack Lowry",
+          "url": "",
+          "note": "(Spring 2021 – Summer 2022)"
+        },
+        {
+          "name": "Jasmine Flanders",
+          "url": "",
+          "note": "(Summer 2021), Project SUPER for Women in STEM"
+        },
+        {
+          "name": "Daniel Boehm",
+          "url": "",
+          "note": "(Fall 2019 – Spring 2020) [Aresty fellow] Collaboration resulted in 1 conference publication with Daniel as a co-author."
+        },
+        {
+          "name": "Sruthi Soorian",
+          "url": "",
+          "note": "(Summer 2019 – Spring 2020), Project SUPER for Women in STEM, Collaboration resulted in 1 conference publication with Sruthi as a co-author"
+        },
+        {
+          "name": "Seth Karten",
+          "url": "",
+          "note": "(Summer 2018 – Spring 2021), collaboration resulted in 1 conference publication with Seth as a co-author – Joined the MS in Robotics from Carnegie Mellon University and then continued as a PhD Candidate at Princeton University with Chi Jin"
+        },
+        {
+          "name": "Patrick Meng",
+          "url": "",
+          "note": "(Summer 2017 – Spring 2021), collaboration resulted in 1 conference publication with Patrick as a first author – Joined the MS program of Columbia University and then continued as a PhD Candidate in Kostas Bekris’ group"
+        },
+        {
+          "name": "Nicholas Griego",
+          "url": "",
+          "note": "(Fall 2017)"
+        },
+        {
+          "name": "Han Meng",
+          "url": "",
+          "note": "(Summer 2015 – Summer 2016), Aresty Fellow and CCICADA researcher"
+        },
+        {
+          "name": "Robert Gross",
+          "url": "",
+          "note": "(Summer 2014 – Summer 2016)"
+        },
+        {
+          "name": "Robert Kolchmeyer",
+          "url": "",
+          "note": "(Fall 2014 – Summer 2015), Aresty Fellow, collaboration resulted in 1 conference publication with Robert as a first author."
+        },
+        {
+          "name": "Andrew Wells",
+          "url": "",
+          "note": "(Summer 2015), DIMACS REU Fellow – CUA student, joined Rice University as a PhD student"
+        },
+        {
+          "name": "Poorva Sampat",
+          "url": "",
+          "note": "(Summer 2014 – Summer 2015), REU Fellow, CCICADA Research Assistant"
+        },
+        {
+          "name": "Meera Murti",
+          "url": "",
+          "note": "(Summer 2014 – Summer 2015) CCICADA Research Assistant"
+        },
+        {
+          "name": "Ainesh Bakshi",
+          "url": "",
+          "note": "(Fall 2014 – Spring 2015), Aresty Fellow"
+        },
+        {
+          "name": "Gautam Venkatesan",
+          "url": "",
+          "note": "(Summer 2014), Aresty Fellow"
+        },
+        {
+          "name": "Priyesh Shah",
+          "url": "",
+          "note": "(Summer 2014)"
+        },
+        {
+          "name": "Grisam Shah",
+          "url": "",
+          "note": "(Summer 2014)"
+        },
+        {
+          "name": "Isaac Yochelson",
+          "url": "",
+          "note": "(Summer 2013 – May 2014), Collaboration results in 1 conference publication."
+        },
+        {
+          "name": "Ellyn Thwaite",
+          "url": "",
+          "note": "(Summer 2013 – May 2014)"
+        },
+        {
+          "name": "Joseph Jaeger",
+          "url": "",
+          "note": "(Summer 2013) – Joined the graduate program of UCSD."
+        },
+        {
+          "name": "Qandeel Sajid",
+          "url": "",
+          "note": "(Summer 2011 – Summer 2012) – 1 conference paper – Joined USC as graduate student upon graduation"
+        },
+        {
+          "name": "Jared Rhizor",
+          "url": "",
+          "note": "(Fall 2011 – Spring 2012) – Joined LiveRamp."
+        },
+        {
+          "name": "Justin Cardoza",
+          "url": "",
+          "note": "(Fall 2011 – Spring 2012)"
+        },
+        {
+          "name": "Zakary Littlefield",
+          "url": "",
+          "note": "(Fall 2010 – Summer 2011) – Joined group as a PhD student."
+        },
+        {
+          "name": "Ethan Pang",
+          "url": "",
+          "note": "(Fall 2010 – Summer 2011) – Joined Micron Technology, Inc. upon graduation"
+        },
+        {
+          "name": "Andrew Dobson",
+          "url": "",
+          "note": "(Spring 2009-Spring 2010) – Joined group as a PhD student."
+        },
+        {
+          "name": "Alexis Oyama",
+          "url": "",
+          "note": "(Summer 2009-Spring 2010) – Collaboration resulted in 1 conference publication. Joined the MS program of the Entertainment Technology Center at Carnegie Mellon University"
+        }
+      ]
+    }
+  ]
+}

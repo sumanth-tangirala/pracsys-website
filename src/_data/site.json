@@ -1,0 +1,71 @@
+{
+  "title": "PRACSYS Lab",
+  "description": "PRACSYS (Physics-aware Research for Autonomous Computational SYStems) — Prof. Kostas Bekris' robotics research group at Rutgers University. Research in robot learning, perception, and planning.",
+  "url": "https://sumanth-tangirala.github.io/pracsys-website",
+  "repo": "sumanth-tangirala/pracsys-website",
+  "branch": "main",
+  "logo": "/uploads/2024/11/PRACSYS-Logos-Horizontal.003-e1778875231877.png",
+  "favicon": "/uploads/2024/11/cropped-rutgers-favicon.001-1-32x32.png",
+  "appleIcon": "/uploads/2024/11/cropped-rutgers-favicon.001-1-180x180.png",
+  "nav": [
+    { "label": "Home", "href": "/" },
+    { "label": "Team", "href": "/#team" },
+    { "label": "Software", "href": "/#software" },
+    { "label": "Projects", "href": "/#project-categories" },
+    { "label": "Papers", "href": "/papers/" }
+  ],
+  "hero": {
+    "image": "/uploads/2025/02/Video-Aug-29-2018.jpg",
+    "logo": "/uploads/2024/11/PRACSYS-Logo-1024x307.png",
+    "tagline": "Research in robot learning, perception, and planning",
+    "subtitle": "Applications include manipulation and navigation for logistics, search & rescue and service robotics, with a focus on novel soft mechanisms and robots with significant dynamics",
+    "buttons": [
+      { "label": "Research Projects", "href": "/#project-categories", "style": "danger" },
+      { "label": "Prof. Kostas Bekris", "href": "/members/kostas-bekris/", "style": "info" }
+    ]
+  },
+  "software": [
+    { "label": "Lightweight Libraries", "href": "/lightweight-libraries/", "icon": "fa-share" },
+    { "label": "Datasets", "href": "/datasets/", "icon": "fa-asterisk" }
+  ],
+  "cta": {
+    "text": "Complete list of members, alumni and visiting students",
+    "button": "All Members",
+    "href": "/members/"
+  },
+  "contact": {
+    "name": "Kostas Bekris",
+    "address": "Room 304, 1 Spring St, New Brunswick, NJ 08901",
+    "phone": "848 445-8854",
+    "emailUser": "kostas.bekris",
+    "emailDomain": "cs.rutgers.edu",
+    "fax": "732 445-0537",
+    "mapQuery": "1 Spring St, New Brunswick, NJ 08901"
+  },
+  "openings": [
+    { "label": "Postdocs", "href": "/openings/#postdocs" },
+    { "label": "PhD", "href": "/openings/#phd" },
+    { "label": "MS", "href": "/openings/#ms" },
+    { "label": "Undergraduate", "href": "/openings/#undergrad" },
+    { "label": "K-12 Students", "href": "/openings/#k12" }
+  ],
+  "funding": {
+    "disclaimer": "The opinions expressed here do not reflect those of the sponsors.",
+    "federal": [
+      { "label": "NSF", "href": "https://www.nsf.gov/" },
+      { "label": "NASA", "href": "https://www.nasa.gov/" },
+      { "label": "DoD" },
+      { "label": "DHS" }
+    ],
+    "corporate": "JD-X, IAI, ExxonMobil"
+  },
+  "affiliations": [
+    { "label": "Computer Science Department", "href": "http://www.cs.rutgers.edu/" },
+    { "label": "CBIM Research Center", "href": "http://www.cbim.rutgers.edu/" },
+    { "label": "RU Center for Cognitive Science", "href": "https://ruccs.rutgers.edu/" },
+    { "label": "CCICADA DHS CoE at Rutgers", "href": "http://ccicada.org/" },
+    { "label": "School of Arts & Sciences", "href": "http://sas.rutgers.edu/" },
+    { "label": "Rutgers University", "href": "http://rutgers.edu/" }
+  ],
+  "copyright": "Copyright © 2018 - Prof. Kostas Bekris' PRACSYS Research Group"
+}

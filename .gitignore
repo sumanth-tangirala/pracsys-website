@@ -1,0 +1,8 @@
+node_modules/
+_site/
+.DS_Store
+*.log
+.env
+
+# Original teachPress export; the canonical copy is data/publications.bib
+TeachPress Publication.bib

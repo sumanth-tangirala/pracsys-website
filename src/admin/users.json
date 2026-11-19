@@ -1,0 +1,20 @@
+{
+  "users": [
+    {
+      "username": "kbekris",
+      "name": "Kostas Bekris",
+      "role": "admin",
+      "salt": "CyUZVJSmyBOiWPUKkNcAvg==",
+      "hash": "g4Aw573CGIYbeK0JBfgNjk2wPlkyQvOzHBPTRPQ/erA=",
+      "iterations": 210000
+    },
+    {
+      "username": "stangirala",
+      "name": "Sumanth Tangirala",
+      "role": "admin",
+      "salt": "FJeofX1vfxuyofMJDdKrNA==",
+      "hash": "xlcULxuNWMNwYDVgtjqQMGV9hsXYi3uCjByKFTfh/n0=",
+      "iterations": 210000
+    }
+  ]
+}

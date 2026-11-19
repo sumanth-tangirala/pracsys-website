@@ -1,0 +1,15 @@
+---
+layout: layouts/page.njk
+title: Projects
+permalink: /projects/
+fullWidth: true
+bodyClass: page projects-page
+---
+<div class="projects-grid">
+  {% for p in projects %}
+  <figure class="project-tile">
+    <a href="/projects/{{ p.slug }}/"><img src="{{ p.listImage }}" alt="" loading="lazy"></a>
+    <figcaption><a href="/projects/{{ p.slug }}/">{{ p.listTitle }}</a></figcaption>
+  </figure>
+  {% endfor %}
+</div>

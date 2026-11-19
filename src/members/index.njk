@@ -1,0 +1,24 @@
+---
+layout: layouts/page.njk
+title: Members
+permalink: /members/
+sidebar: true
+---
+<h2><strong>Current Members</strong></h2>
+{% for g in members.groups %}
+<h3><strong>{{ g.title }}</strong></h3>
+<ul>
+  {% for slug in g.slugs %}{% set m = members.current | memberBySlug(slug) %}
+  <li><a href="/members/{{ m.slug }}/">{{ m.name }}</a>{% if g.sep %}{{ g.sep }}{{ m.position }}{% elif m.note %}: {{ m.note }}{% endif %}</li>
+  {% endfor %}
+</ul>
+{% endfor %}
+<h2><strong>Alumni</strong></h2>
+{% for g in members.alumni %}
+<h3><strong>{{ g.group }}</strong></h3>
+<ul>
+  {% for p in g.people %}
+  <li>{% if p.html %}{{ p.html | safe }}{% else %}{% if p.url %}<a href="{{ p.url }}" target="_blank" rel="noopener">{{ p.name }}</a>{% else %}{{ p.name }}{% endif %}{% if p.note %}{% if p.note[0] == '(' %} {% else %}: {% endif %}{{ p.note }}{% endif %}{% endif %}</li>
+  {% endfor %}
+</ul>
+{% endfor %}

@@ -1,0 +1,19 @@
+---
+layout: layouts/page.njk
+sidebar: true
+pagination:
+  data: members.current
+  size: 1
+  alias: member
+permalink: "/members/{{ member.slug }}/"
+eleventyComputed:
+  title: "{{ member.title }}"
+  description: "{{ member.name }} — {{ member.position }}, PRACSYS Lab, Rutgers University."
+---
+<div class="member-bio">
+{% include "bios/" + member.slug + ".html" %}
+</div>
+{% if member.showPublications and member.authors.length and (publications | pubCount({ authors: member.authors })) %}
+<h3>Publications:</h3>
+{% publist publications, { authors: member.authors }, { idPrefix: 'm' } %}
+{% endif %}
