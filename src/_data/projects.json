@@ -4,8 +4,8 @@
     "title": "Vision-driven and Learned Manipulation",
     "cardTitle": "Vision-driven and Learned Manipulation",
     "listTitle": "Vision-driven and Learned Manipulation",
-    "thumb": "/uploads/2025/02/manipulator-300x194.jpg",
-    "listImage": "/uploads/2025/02/manipulator.jpg",
+    "thumb": "/uploads/optimized/project-manipulation-thumb.webp",
+    "listImage": "/uploads/optimized/project-manipulation-listImage.webp",
     "cover": "/uploads/2025/02/manipulator.jpg",
     "filter": {
       "tags": [
@@ -18,8 +18,8 @@
     "title": "Verification of Robot Control",
     "cardTitle": "Verification of Robot Control",
     "listTitle": "Verification of Robot Control",
-    "thumb": "/uploads/2025/02/verification-1-300x194.png",
-    "listImage": "/uploads/2025/02/verification-1-e1778875100817.png",
+    "thumb": "/uploads/optimized/project-verification-thumb.webp",
+    "listImage": "/uploads/optimized/project-verification-listImage.webp",
     "cover": "/uploads/2025/02/verification-1-e1778875100817.png",
     "filter": {
       "tags": [
@@ -32,8 +32,8 @@
     "title": "Soft Robots",
     "cardTitle": "Soft Robots",
     "listTitle": "Tensegrity Modeling and Control",
-    "thumb": "/uploads/2025/02/tensegrity-300x194.png",
-    "listImage": "/uploads/2025/02/tensegrity-e1778875035527.png",
+    "thumb": "/uploads/optimized/project-soft-robots-thumb.webp",
+    "listImage": "/uploads/optimized/project-soft-robots-listImage.webp",
     "cover": "/uploads/2025/02/tensegrity-e1778875035527.png",
     "filter": {
       "tags": [
@@ -46,8 +46,8 @@
     "title": "Dynamics",
     "cardTitle": "Dynamics",
     "listTitle": "Kinodynamic Planning and Learning",
-    "thumb": "/uploads/2025/02/mushr-300x194.jpg",
-    "listImage": "/uploads/2025/02/mushr.jpg",
+    "thumb": "/uploads/optimized/project-dynamics-thumb.webp",
+    "listImage": "/uploads/optimized/project-dynamics-listImage.webp",
     "cover": "/uploads/2025/02/mushr.jpg",
     "filter": {
       "keys": [
@@ -70,8 +70,8 @@
     "title": "Perception",
     "cardTitle": "Perception",
     "listTitle": "Robot Vision",
-    "thumb": "/uploads/2024/11/6D-Poses-Dataset-1-300x194.png",
-    "listImage": "/uploads/2024/11/6D-Poses-Dataset-1-e1778875196771.png",
+    "thumb": "/uploads/optimized/project-perception-thumb.webp",
+    "listImage": "/uploads/optimized/project-perception-listImage.webp",
     "cover": "/uploads/2024/11/6D-Poses-Dataset-1-e1778875196771.png",
     "filter": {
       "tags": [
@@ -84,8 +84,8 @@
     "title": "Planning",
     "cardTitle": "Planning",
     "listTitle": "Motion and Task Planning",
-    "thumb": "/uploads/2025/02/tamp-300x194.png",
-    "listImage": "/uploads/2025/02/tamp-e1778874995483.png",
+    "thumb": "/uploads/optimized/project-planning-thumb.webp",
+    "listImage": "/uploads/optimized/project-planning-listImage.webp",
     "cover": "/uploads/2025/02/tamp-e1778874995483.png",
     "filter": {
       "tags": [

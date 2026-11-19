@@ -1,13 +1,14 @@
 import { HtmlBasePlugin } from '@11ty/eleventy';
 import {
   renderPublicationList,
+  publistRenderOptions,
   filterPublications,
   PER_PAGE,
   facets,
   TYPES,
   escapeHtml,
 } from './src/assets/js/lib/publications.js';
-import { renderPager } from './src/assets/js/lib/pager.js';
+import { renderPager, PAGER_LABELS } from './src/assets/js/lib/pager.js';
 
 /**
  * PATH_PREFIX lets the same source build for a GitHub Pages project site
@@ -28,7 +29,8 @@ export default function (eleventyConfig) {
 
   /** JSON for inline <script type="application/json"> blocks. */
   eleventyConfig.addFilter('jsonAttr', (value) => escapeHtml(JSON.stringify(value)));
-  eleventyConfig.addFilter('json', (value) => JSON.stringify(value).replace(/</g, '\\u003c'));
+  eleventyConfig.addFilter('json', (value) => JSON.stringify(value ?? null)
+    .replace(/</g, '\\u003c').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029'));
 
   eleventyConfig.addFilter('byGroup', (members, group) => members.filter((m) => m.group === group));
   eleventyConfig.addFilter('memberBySlug', (members, slug) => members.find((m) => m.slug === slug));
@@ -44,26 +46,31 @@ export default function (eleventyConfig) {
    *
    * Renders the first page of a teachPress-style list at build time. The
    * browser script (assets/js/publist.js) takes over for paging, filtering
-   * and previewing unpublished edits made in the admin editor.
+   * and previewing unpublished edits made in the admin editor; it renders
+   * with the same options (publistRenderOptions, PAGER_LABELS), so the markup
+   * of page 1 is identical and nothing shifts when it re-renders.
+   *
+   * Options: filters, showTags, syncUrl, idPrefix, perPage, emptyText,
+   * headingLevel (year headings; defaults to 2 on a list with filters, which
+   * sits directly under the page title, otherwise 3).
    */
-  eleventyConfig.addShortcode('publist', function (pubs, filter = {}, options = {}) {
+  eleventyConfig.addShortcode('publist', function (pubs, filter, options) {
     const base = pathPrefix.replace(/\/$/, '');
-    const matched = filterPublications(pubs, filter);
-    const perPage = options.perPage || PER_PAGE;
-    const page = matched.slice(0, perPage);
-    const config = { filter, ...options, perPage };
-    const filtersHtml = options.filters ? renderFilters(facets(pubs)) : '';
-    const list = renderPublicationList(page, {
-      showTags: !!options.showTags,
-      tagHref: (t) => `/papers/?tag=${encodeURIComponent(t)}`,
-      idPrefix: options.idPrefix || 'tp',
-      emptyText: options.emptyText,
-    });
-    const pager = renderPager(matched.length, 1, perPage);
+    const opts = options || {};
+    const match = filter || {};
+    const all = pubs || [];
+    const matched = filterPublications(all, match);
+    const perPage = Math.max(1, parseInt(opts.perPage, 10) || PER_PAGE);
+    const config = { filter: match, ...opts, perPage, headingLevel: opts.headingLevel || (opts.filters ? 2 : 3) };
+    const filtersHtml = opts.filters ? renderFilters(facets(all)) : '';
+    // Root-relative tag links: the base plugin adds the path prefix to them.
+    const list = renderPublicationList(matched.slice(0, perPage), publistRenderOptions(config, ''));
+    const pager = (label) => renderPager(matched.length, 1, perPage, { label });
     return `<div class="tp-publist" data-publist="${escapeHtml(JSON.stringify(config))}" data-base="${escapeHtml(base)}">`
-      + `${filtersHtml}<div class="tp-pager-top">${pager}</div>`
-      + `<div class="tp-results" aria-live="polite">${list}</div>`
-      + `<div class="tp-pager-bottom">${matched.length > perPage ? pager : ''}</div></div>`;
+      + `${filtersHtml}<div class="tp-status screen-reader-text" role="status"></div>`
+      + `<div class="tp-pager-top">${pager(PAGER_LABELS.top)}</div>`
+      + `<div class="tp-results">${list}</div>`
+      + `<div class="tp-pager-bottom">${matched.length > perPage ? pager(PAGER_LABELS.bottom) : ''}</div></div>`;
   });
 
   function renderFilters(f) {

@@ -13,60 +13,22 @@
  */
 import { serializeBibtex } from './lib/bibtex.js';
 import { publicationsFromEntries, sortPublications, toPublication } from './lib/publications.js';
+import {
+  OVERLAY_KEY, CHANGE_EVENT, siteBase, getStorage, emptyOverlay, sanitizeOverlay,
+  readOverlay, writeOverlay, previewDisabled, setPreviewDisabled,
+} from './overlay.js';
 
-export const OVERLAY_KEY = 'pracsys.publications.overlay.v1';
-const PREVIEW_OFF_KEY = 'pracsys.preview.off';
-export const CHANGE_EVENT = 'pracsys:publications-changed';
+export { OVERLAY_KEY, CHANGE_EVENT, siteBase, readOverlay, previewDisabled, setPreviewDisabled };
 
-export function siteBase() {
-  const b = (typeof window !== 'undefined' && window.PRACSYS_BASE) || '/';
-  return b.endsWith('/') ? b : `${b}/`;
-}
-
-function safeStorage(kind = 'localStorage') {
-  try {
-    const s = window[kind];
-    const probe = '__pracsys_probe__';
-    s.setItem(probe, '1');
-    s.removeItem(probe);
-    return s;
-  } catch {
-    return null;
-  }
-}
-
-/** Read the overlay without loading anything else (used for the preview banner). */
-export function readOverlay() {
-  const ls = safeStorage();
-  if (!ls) return emptyOverlay();
-  try {
-    const raw = JSON.parse(ls.getItem(OVERLAY_KEY) || 'null');
-    if (raw && raw.version === 1 && raw.changes && typeof raw.changes === 'object') return raw;
-  } catch { /* fall through */ }
-  return emptyOverlay();
-}
-
-function emptyOverlay() {
-  return { version: 1, startedAgainst: null, changes: {} };
-}
-
-export function previewDisabled() {
-  return safeStorage('sessionStorage')?.getItem(PREVIEW_OFF_KEY) === '1';
-}
-
-export function setPreviewDisabled(off) {
-  const ss = safeStorage('sessionStorage');
-  if (!ss) return;
-  if (off) ss.setItem(PREVIEW_OFF_KEY, '1');
-  else ss.removeItem(PREVIEW_OFF_KEY);
-}
+/** `format` marker of files written by exportOverlay(). */
+export const OVERLAY_FORMAT = 'pracsys-publications-overlay';
 
 /** Normalised representation used to compare entries for equality. */
 export function canonical(entry) {
   const fields = {};
   for (const k of Object.keys(entry.fields || {}).sort()) {
     const v = String(entry.fields[k] ?? '').trim();
-    if (v !== '') fields[k] = v;
+    if (v !== '') fields[k.toLowerCase()] = v;
   }
   return JSON.stringify([String(entry.type || '').toLowerCase(), String(entry.key || '').trim(), fields]);
 }
@@ -77,14 +39,27 @@ export function entriesEqual(a, b) {
 
 let publishedPromise = null;
 
-/** Fetch the published set once per page load. */
+/**
+ * Fetch the published set once per page load. `fresh` bypasses the browser
+ * and CDN caches (GitHub Pages caches for 10 minutes), e.g. right after a
+ * deploy. A failed request is not cached, so the next call retries.
+ */
 export function loadPublished({ fresh = false } = {}) {
   if (!publishedPromise || fresh) {
-    publishedPromise = fetch(`${siteBase()}data/publications.json`, { cache: fresh ? 'no-cache' : 'default' })
+    const url = `${siteBase()}data/publications.json${fresh ? `?v=${Date.now()}` : ''}`;
+    const promise = fetch(url, { cache: fresh ? 'no-cache' : 'default' })
       .then((r) => {
         if (!r.ok) throw new Error(`Could not load publications (HTTP ${r.status})`);
         return r.json();
+      })
+      .then((data) => {
+        if (!data || !Array.isArray(data.entries)) throw new Error('Could not load publications (unexpected data format)');
+        return data;
       });
+    publishedPromise = promise;
+    promise.catch(() => {
+      if (publishedPromise === promise) publishedPromise = null;
+    });
   }
   return publishedPromise;
 }
@@ -94,12 +69,13 @@ export class LocalOverlayStore {
     this.published = null; // { generated, entries }
     this.overlay = readOverlay();
     this.listeners = new Set();
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && window.addEventListener) {
+      // Another tab saved (key) or cleared all storage (key === null).
       window.addEventListener('storage', (e) => {
-        if (e.key === OVERLAY_KEY) {
-          this.overlay = readOverlay();
-          this.emit();
-        }
+        if (e.key !== OVERLAY_KEY && e.key !== null) return;
+        if (e.storageArea && e.storageArea !== getStorage()) return;
+        this.overlay = readOverlay();
+        this.emit();
       });
     }
   }
@@ -120,16 +96,42 @@ export class LocalOverlayStore {
   }
 
   emit() {
-    for (const fn of this.listeners) fn(this);
-    if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent(CHANGE_EVENT));
+    for (const fn of this.listeners) {
+      try {
+        fn(this);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    if (typeof window !== 'undefined' && window.dispatchEvent && typeof CustomEvent === 'function') {
+      window.dispatchEvent(new CustomEvent(CHANGE_EVENT));
+    }
   }
 
+  /** Write the current overlay (kept for callers of the old API). */
   save() {
-    const ls = safeStorage();
-    if (!ls) throw new Error('This browser does not allow saving data (private mode or storage disabled).');
-    if (Object.keys(this.overlay.changes).length === 0) ls.removeItem(OVERLAY_KEY);
-    else ls.setItem(OVERLAY_KEY, JSON.stringify(this.overlay));
+    writeOverlay(this.overlay);
     this.emit();
+  }
+
+  /**
+   * Apply a change to the overlay and persist it. Starts from the stored
+   * overlay so edits saved meanwhile in another tab are not overwritten, and
+   * leaves memory untouched when saving fails (e.g. storage full).
+   */
+  mutate(fn) {
+    if (!getStorage()) throw new Error('This browser does not allow saving data (private mode or storage disabled).');
+    const before = this.overlay;
+    this.overlay = readOverlay();
+    try {
+      const result = fn(this.overlay);
+      writeOverlay(this.overlay);
+      this.emit();
+      return result;
+    } catch (err) {
+      this.overlay = before;
+      throw err;
+    }
   }
 
   /** Published entries indexed by key. */
@@ -182,57 +184,74 @@ export class LocalOverlayStore {
 
   /**
    * Create or update an entry. When `previousKey` differs from the entry's
-   * key the old key is removed (a rename).
+   * key the old key is removed (a rename); renaming onto a key that is in
+   * use throws. Rename chains (A → B → C) keep pointing at the published
+   * original, so reverting C restores A.
    */
   upsert(entry, { previousKey = null, user = null } = {}) {
-    const clean = { type: String(entry.type).toLowerCase(), key: String(entry.key).trim(), fields: {} };
+    const clean = { type: String(entry.type || 'misc').toLowerCase(), key: String(entry.key ?? '').trim(), fields: {} };
     for (const [k, v] of Object.entries(entry.fields || {})) {
       const val = String(v ?? '').trim();
       if (val !== '') clean.fields[k.toLowerCase()] = val;
     }
-    const at = new Date().toISOString();
-    const published = this.publishedMap();
-    this.overlay.startedAgainst ??= this.publishedVersion;
-    if (previousKey && previousKey !== clean.key) {
-      if (published.has(previousKey)) {
-        this.overlay.changes[previousKey] = { op: 'delete', at, user, renamedTo: clean.key };
-      } else {
-        delete this.overlay.changes[previousKey];
+    if (!clean.key) throw new Error('A citation key is required.');
+    return this.mutate((ov) => {
+      const changes = ov.changes;
+      const at = new Date().toISOString();
+      const published = this.publishedMap();
+      ov.startedAgainst ??= this.publishedVersion;
+      const renaming = !!previousKey && previousKey !== clean.key;
+      // The published key this entry descends from through renames, if any.
+      let origin = changes[clean.key]?.renamedFrom ?? null;
+      if (renaming) {
+        if (this.has(clean.key)) throw new Error(`Another publication already uses the key “${clean.key}”.`);
+        const prev = changes[previousKey];
+        origin = (prev?.op === 'upsert' && prev.renamedFrom) || (published.has(previousKey) ? previousKey : null);
+        if (published.has(previousKey)) changes[previousKey] = { op: 'delete', at, user, renamedTo: clean.key };
+        else delete changes[previousKey];
+        if (origin && origin !== previousKey && changes[origin]?.op === 'delete') {
+          changes[origin] = { ...changes[origin], renamedTo: clean.key };
+        }
       }
-    }
-    const base = published.get(clean.key);
-    if (base && entriesEqual(base, clean)) delete this.overlay.changes[clean.key];
-    else this.overlay.changes[clean.key] = { op: 'upsert', at, user, entry: clean, ...(previousKey && previousKey !== clean.key ? { renamedFrom: previousKey } : {}) };
-    this.save();
-    return clean;
+      if (origin === clean.key) origin = null; // renamed back to where it started
+      const base = published.get(clean.key);
+      if (base && entriesEqual(base, clean)) delete changes[clean.key];
+      else changes[clean.key] = { op: 'upsert', at, user, entry: clean, ...(origin ? { renamedFrom: origin } : {}) };
+      return clean;
+    });
   }
 
   remove(key, { user = null } = {}) {
-    const published = this.publishedMap();
-    if (published.has(key)) {
-      this.overlay.changes[key] = { op: 'delete', at: new Date().toISOString(), user };
-    } else {
-      delete this.overlay.changes[key];
-    }
-    this.save();
+    this.mutate((ov) => {
+      const changes = ov.changes;
+      const prev = changes[key];
+      // Deleting a renamed entry: the original stays deleted, without a dangling "renamed to".
+      const src = prev?.renamedFrom ? changes[prev.renamedFrom] : null;
+      if (src?.op === 'delete' && src.renamedTo === key) {
+        const { renamedTo, ...rest } = src;
+        changes[prev.renamedFrom] = rest;
+      }
+      if (this.publishedMap().has(key)) changes[key] = { op: 'delete', at: new Date().toISOString(), user };
+      else delete changes[key];
+    });
   }
 
   /** Undo the local change for one key (restores the published version). */
   revert(key) {
-    const c = this.overlay.changes[key];
-    delete this.overlay.changes[key];
-    if (c?.renamedFrom && this.overlay.changes[c.renamedFrom]?.renamedTo === key) {
-      delete this.overlay.changes[c.renamedFrom];
-    }
-    if (c?.renamedTo && this.overlay.changes[c.renamedTo]?.renamedFrom === key) {
-      delete this.overlay.changes[c.renamedTo];
-    }
-    this.save();
+    this.mutate((ov) => {
+      const changes = ov.changes;
+      const c = changes[key];
+      delete changes[key];
+      if (c?.renamedFrom && changes[c.renamedFrom]?.renamedTo === key) delete changes[c.renamedFrom];
+      if (c?.renamedTo && changes[c.renamedTo]?.renamedFrom === key) delete changes[c.renamedTo];
+    });
   }
 
   discardAll() {
-    this.overlay = emptyOverlay();
-    this.save();
+    this.mutate((ov) => {
+      ov.changes = emptyOverlay().changes;
+      ov.startedAgainst = null;
+    });
   }
 
   /**
@@ -242,16 +261,21 @@ export class LocalOverlayStore {
    */
   prune() {
     const published = this.publishedMap();
-    let removed = 0;
-    for (const [key, c] of Object.entries(this.overlay.changes)) {
+    const stale = (c, key) => {
       const live = published.get(key);
-      if ((c.op === 'upsert' && live && entriesEqual(live, c.entry)) || (c.op === 'delete' && !live)) {
-        delete this.overlay.changes[key];
-        removed++;
+      return (c.op === 'upsert' && live && entriesEqual(live, c.entry)) || (c.op === 'delete' && !live);
+    };
+    if (!Object.entries(this.overlay.changes).some(([k, c]) => stale(c, k))) return 0;
+    return this.mutate((ov) => {
+      let removed = 0;
+      for (const [key, c] of Object.entries(ov.changes)) {
+        if (stale(c, key)) {
+          delete ov.changes[key];
+          removed++;
+        }
       }
-    }
-    if (removed) this.save();
-    return removed;
+      return removed;
+    });
   }
 
   /** List of pending changes with before/after entries. */
@@ -276,7 +300,10 @@ export class LocalOverlayStore {
     return Object.keys(this.overlay.changes).length;
   }
 
-  /** Full BibTeX file for the merged set, newest first (teachPress order). */
+  /**
+   * Full BibTeX file for the merged set, newest first (teachPress order).
+   * `onlyChanged` limits it to new and edited entries.
+   */
   exportBibtex({ onlyChanged = false } = {}) {
     let entries = this.entries();
     if (onlyChanged) {
@@ -291,6 +318,58 @@ export class LocalOverlayStore {
 
   exportJson() {
     return JSON.stringify({ exported: new Date().toISOString(), entries: this.entries() }, null, 2);
+  }
+
+  /**
+   * The pending changes themselves (edits, additions, deletions and
+   * renames) as JSON, to move them to another browser with importOverlay().
+   */
+  exportOverlay() {
+    return JSON.stringify({
+      format: OVERLAY_FORMAT,
+      version: 1,
+      exported: new Date().toISOString(),
+      startedAgainst: this.overlay.startedAgainst,
+      changes: this.overlay.changes,
+    }, null, 2);
+  }
+
+  /**
+   * Load pending changes written by exportOverlay() (or a raw overlay).
+   * With merge (default) imported changes replace local ones for the same
+   * keys and other local changes are kept; with merge: false the local
+   * overlay is replaced. Throws on invalid input; returns counts.
+   */
+  importOverlay(json, { merge = true } = {}) {
+    let data = json;
+    if (typeof json === 'string') {
+      try {
+        data = JSON.parse(json);
+      } catch {
+        throw new Error('This file is not a pending-changes export (invalid JSON).');
+      }
+    }
+    if (data && typeof data === 'object' && data.format !== undefined && data.format !== OVERLAY_FORMAT) {
+      throw new Error('This file is not a pending-changes export.');
+    }
+    const incoming = sanitizeOverlay(data);
+    if (!incoming) throw new Error('This file is not a pending-changes export.');
+    const offered = Object.keys(data.changes).length;
+    return this.mutate((ov) => {
+      if (!merge) {
+        ov.changes = emptyOverlay().changes;
+        ov.startedAgainst = null;
+      }
+      let added = 0;
+      let replaced = 0;
+      for (const [key, c] of Object.entries(incoming.changes)) {
+        if (key in ov.changes) replaced++;
+        else added++;
+        ov.changes[key] = c;
+      }
+      ov.startedAgainst ??= incoming.startedAgainst;
+      return { added, replaced, skipped: offered - added - replaced };
+    });
   }
 }
 

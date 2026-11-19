@@ -11,6 +11,7 @@ sidebar: true
 <p>The Rutgers Underactuated-hand Manipulation (RUM) dataset is a wide set of real data collected from several underactuated hands (the <a href="https://www.eng.yale.edu/grablab/openhand/">Model-T42 and Model-O</a>) across various types of objects. The data comprises approximately 300,000 transition points for each object. Furthermore, each object comes with 10 long validation paths that provide substantial coverage of the hand’s workspace and also involve frequent changes of action.</p>
 <figure class="wp-caption alignleft" style="width: 291px"><img alt="Model-T42" height="190" src="https://www.eng.yale.edu/grablab/openhand/images/hand%20-%20t42.jpg" width="291"/><figcaption class="wp-caption-text">Model-T42</figcaption></figure>
 <figure class="wp-caption alignleft" style="width: 253px"><img alt="Model-O" height="190" src="https://www.eng.yale.edu/grablab/openhand/images/hand%20-%20o.jpg" width="253"/><figcaption class="wp-caption-text">Model-O</figcaption></figure>
+<div class="clearfix"></div>
 <p>Here we provide links to download the dataset, separated by hand model and data category:</p>
 <p><a href="https://www.cs.rutgers.edu/~kb572/adaptive_hand_data/RUM.zip">Entire Dataset</a></p>
 <p><a href="https://www.cs.rutgers.edu/~kb572/adaptive_hand_data/All_Models.zip">Only Model-O and T-42 Files</a></p>
@@ -33,7 +34,7 @@ sidebar: true
 <li>Forward-kinematics recorded</li>
 <li>Camera extrinsic parameters calibrated</li>
 </ul>
-<p><img src="https://github.com/wenbowen123/iros20-6d-pose-tracking/raw/master/media/manipulation1.gif" width="480"/></p>
+<p><img alt="Animation comparing 6D pose tracking of a mustard bottle during robot manipulation across three methods" src="https://github.com/wenbowen123/iros20-6d-pose-tracking/raw/master/media/manipulation1.gif" width="480"/></p>
 <p><a href="https://github.com/wenbowen123/iros20-6d-pose-tracking">Dataset Page</a></p>
 <h2><strong>Object Pose Estimation In Adaptive Hands Dataset</strong></h2>
 <p>Many manipulation tasks, such as placement or within-hand manipulation, require the object’s pose relative to a robot hand. The task is difficult when the hand significantly occludes the object. It is especially hard for adaptive hands, for which it is not easy to detect the finger’s configuration.</p>
@@ -49,10 +50,10 @@ sidebar: true
 </li>
 <li><a href="https://archive.cs.rutgers.edu/archive/a/2020/pracsys/Bowen/icra2020/meshes.tar.gz" rel="nofollow">object and hand CAD models, computed PPF features</a>.</li>
 </ul>
-<p><img alt="" src="https://github.com/wenbowen123/icra20-hand-object-pose/raw/master/media/cuboid1.jpg"/></p>
-<p><img alt="" src="https://github.com/wenbowen123/icra20-hand-object-pose/raw/master/media/sim.jpg"/></p>
-<h2><a href="https://robotics.cs.rutgers.edu/pracsys/rutgers-apc-rgb-d-dataset/"><strong>Rutgers APC RGB-D Dataset</strong></a></h2>
-<p align="justify">To better equip the research community in evaluating and improving robotic perception solutions for warehouse picking challenges, the PRACSYS lab at Rutgers University provides <a href="https://robotics.cs.rutgers.edu/pracsys/rutgers-apc-rgb-d-dataset/">a new rich RGB-D data set for warehouse picking</a> and software for utilizing it. The dataset contains 10,368 depth and RGB registered images, complete with hand-annotated 6DOF poses for 24 of the Amazon Picking Challenge (APC) objects (mead_index_cards excluded). Also provided are 3D mesh models of the 25 APC objects, which may be used for training of recognition algorithms.</p>
+<p><img alt="Real-world examples of an adaptive robot hand grasping a cuboid object, including a highly self-occluded case" src="https://github.com/wenbowen123/icra20-hand-object-pose/raw/master/media/cuboid1.jpg"/></p>
+<p><img alt="Synthetic renderings of adaptive robot hands holding objects" src="https://github.com/wenbowen123/icra20-hand-object-pose/raw/master/media/sim.jpg"/></p>
+<h2><a href="https://web.archive.org/web/20241227121923/https://robotics.cs.rutgers.edu/pracsys/rutgers-apc-rgb-d-dataset/"><strong>Rutgers APC RGB-D Dataset</strong></a></h2>
+<p align="justify">To better equip the research community in evaluating and improving robotic perception solutions for warehouse picking challenges, the PRACSYS lab at Rutgers University provides <a href="https://web.archive.org/web/20241227121923/https://robotics.cs.rutgers.edu/pracsys/rutgers-apc-rgb-d-dataset/">a new rich RGB-D data set for warehouse picking</a> and software for utilizing it. The dataset contains 10,368 depth and RGB registered images, complete with hand-annotated 6DOF poses for 24 of the Amazon Picking Challenge (APC) objects (mead_index_cards excluded). Also provided are 3D mesh models of the 25 APC objects, which may be used for training of recognition algorithms.</p>
 <h2><strong>Rutgers Extended RGBD dataset</strong></h2>
 <p>Dataset download link: <a href="https://drive.google.com/drive/folders/1aDYq3DFT4fRg_9_LN_1b1RFjcZ7QxPjz?usp=sharing">download</a></p>
 <p>For each scene in the dataset, we share:</p>
@@ -82,5 +83,5 @@ Faster-RCNN (VGG16) Physics Simulation + Self Learning (Table-top): <a href="ht
 <p>(2) A fully convolutional neural network which returns object classification and segmentation probability maps</p>
 <p>(2) A geometric model matching process which returns pose hypotheses for each detected object</p>
 <p>Examples of scenes (The 1st row shows the RGB images and the 2nd row shows the visualization of pose hypotheses in physics simulator PyBullet)</p>
-<p><img alt="" class="alignnone" height="368" src="/uploads/2024/11/6D-Poses-Dataset-1-300x194.png" width="569"/></p>
+<p><img alt="Example tabletop scenes: RGB images (top row) and pose hypotheses visualized in PyBullet (bottom row)" class="alignnone" height="368" src="/uploads/2024/11/6D-Poses-Dataset-1-300x194.png" width="569"/></p>
 <p>The dataset can be referenced <a href="https://drive.google.com/drive/u/0/folders/1cnoJmizXQjNcXduZp_vlb0U4v4jknhAT">here</a>.</p>

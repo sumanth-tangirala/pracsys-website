@@ -1,173 +1,200 @@
 /*
- * Publication lists, styled after the teachPress WordPress plugin
- * (teachpress_front.css) as configured on pracsys.cs.rutgers.edu.
+ * Publication lists, styled after the teachPress WordPress plugin as configured
+ * on pracsys.cs.rutgers.edu: teachpress_front.css + tp_template_2016.css on top
+ * of OnePress/Bootstrap 4. Values below were measured on the live site.
+ * The original renders a <table>; here rows are divs, so the collapsed table
+ * borders are reproduced with an outer frame plus a bottom border per row.
  */
 
 .tp-publist { margin-bottom: 30px; }
+/* The live list sits inside an Elementor column with 10px padding. */
+.papers-page .tp-publist { padding: 10px 10px 0; }
+
+/* ---------------------------------------------------------------- filter */
 
 .teachpress_filter {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 4px;
-  margin: 10px 0 16px;
+  padding-top: 5px;
 }
 .teachpress_filter select,
-.teachpress_filter input[type="search"] {
-  height: 38px;
-  padding: 4px 8px;
-  border: 1px solid #ddd;
-  border-radius: 2px;
-  background: #f9f9f9;
-  color: #555;
-  font-family: var(--font-body);
-  font-size: 13px;
+.teachpress_filter input[type="search"],
+.teachpress_filter .tp-reset {
+  height: 43px;
+  margin: 0;
+  padding: 10px;
+  border: 1px solid var(--border, #e9e9e9);
+  border-radius: 0;
+  background-color: #fff;
+  color: var(--text, #707070);
+  font-family: var(--font-body, "Open Sans", Helvetica, Arial, sans-serif);
+  font-size: 14px;
   max-width: 100%;
 }
-.teachpress_filter select { padding-right: 24px; }
-.teachpress_filter select#tp-author { max-width: 160px; }
-.teachpress_filter input[type="search"] { width: 160px; background: #fff; }
-.teachpress_filter .tp-reset {
-  height: 38px;
-  border: 1px solid #ddd;
-  background: #fff;
-  color: var(--primary);
-  border-radius: 2px;
-  padding: 0 12px;
-  cursor: pointer;
-  font-size: 13px;
-}
-.teachpress_filter .tp-reset:hover { background: #fdf0f0; }
+.teachpress_filter select { cursor: pointer; }
+.teachpress_filter select#tp-author { max-width: 172px; }
+.teachpress_filter input[type="search"] { width: 170px; }
+.teachpress_filter input[type="search"]::placeholder { color: #8a8a8a; }
+.teachpress_filter .tp-reset { color: var(--primary, #dd3333); cursor: pointer; padding: 0 14px; transition: background-color .15s; }
+.teachpress_filter .tp-reset:hover { background-color: #fdf0f0; }
+.teachpress_filter :is(select, input, button):focus-visible { position: relative; z-index: 1; outline-offset: -2px; }
 
-.tablenav { display: flex; justify-content: flex-end; margin: 0 0 6px; }
-.tablenav-pages { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; color: #555; font-size: 13px; }
-.tablenav-pages .displaying-num { margin-right: 6px; }
+/* ----------------------------------------------------------------- pager */
+
+.tablenav { display: flex; justify-content: flex-end; align-items: center; min-height: 30px; padding-top: 5px; margin: 6px 0 4px; }
+.tablenav-pages { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; color: var(--text, #707070); font-size: 14px; }
 .tablenav-pages .paging-input { margin: 0 4px; }
 .tablenav .page-numbers.button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 22px;
-  height: 22px;
-  padding: 0 5px;
-  border: 1px solid #ccc;
-  border-radius: 2px;
-  background: #f3f3f3;
+  min-width: 24px;
+  height: 25px;
+  padding: 0 6px;
+  border: 1px solid silver;
+  border-radius: 3px;
+  background: transparent;
   color: #333;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   line-height: 1;
   text-decoration: none;
+  transition: background-color .15s;
 }
-.tablenav a.page-numbers.button:hover { background: #fff; border-color: #999; color: var(--primary); }
-.tablenav .page-numbers.button.disabled { color: #aaa; background: #eee; cursor: default; }
-.tp-pager-bottom .tablenav { margin-top: 8px; }
+.tablenav a.page-numbers.button:hover,
+.tablenav .page-numbers.button.disabled { background: #ececec; color: #333; }
+.tablenav .page-numbers.button.disabled { cursor: default; }
+.tp-pager-bottom .tablenav { margin-top: 0; }
+/* teachPress prints no pager when everything fits on one page (the filterable list keeps its count). */
+.tp-publist:not(:has(.teachpress_filter)) :is(.tp-pager-top, .tp-pager-bottom):not(:has(.page-numbers)) { display: none; }
+
+/* ------------------------------------------------------------------ list */
 
 .teachpress_publication_list {
-  border: 1px solid #ddd;
+  border: 1px solid var(--border, #e9e9e9);
   border-bottom: 0;
+  margin-bottom: 20px;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.428571;
 }
-.teachpress_publication_list.tp_empty { border-bottom: 1px solid #ddd; padding: 16px; }
+.teachpress_publication_list.tp_empty { border-bottom: 1px solid var(--border, #e9e9e9); padding: 16px; }
 .teachpress_publication_list.tp_empty p { margin: 0; }
 
+/* Year row: 5px cell padding + the h3's own 15px bottom margin. */
 .teachpress_publication_list .tp_h3 {
-  font-family: var(--font-head);
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--text-strong);
+  font-family: var(--font-head, Raleway, Helvetica, Arial, sans-serif);
+  font-size: 20px;
+  line-height: 22px;
+  font-weight: 600;
+  color: var(--text-strong, #333);
   margin: 0;
-  padding: 12px 4px 13px;
-  border-bottom: 1px solid #ddd;
-  scroll-margin-top: calc(var(--header-h) + 10px);
+  padding: 5px 5px 20px;
+  border-bottom: 1px solid var(--border, #e9e9e9);
+  scroll-margin-top: calc(var(--header-h, 75px) + 10px);
 }
 
-.tp_publication { border-bottom: 1px solid #ddd; padding: 8px 6px 8px 6px; display: flex; gap: 14px; }
-.tp_publication + .tp_h3 { border-top: 1px solid #ddd; }
+.tp_publication { display: flex; gap: 14px; padding: 8px; border-bottom: 1px solid silver; }
 .tp_pub_info { min-width: 0; flex: 1; }
 .tp_pub_image img { width: 120px; height: auto; }
-.tp_publication p { margin: 0; }
-.tp_pub_author { color: #555; }
-.tp_pub_title { font-weight: 700; color: #555; }
+
+.tp_pub_info > p,
+.tp_pub_author, .tp_pub_title, .tp_pub_additional, .tp_pub_menu {
+  margin: 1px 0;
+  font-size: 1rem;
+  color: var(--text, #707070);
+}
+.tp_pub_title { font-weight: 700; }
 .tp_title_link {
   all: unset;
   cursor: pointer;
   font-weight: 700;
-  color: #555;
+  color: var(--text, #707070);
 }
-.tp_title_link:hover { color: var(--primary); }
-.tp_title_link:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }
-.tp_pub_additional { color: #555; }
+.tp_title_link:hover { color: var(--primary, #dd3333); }
+.tp_title_link:focus-visible { outline: 2px solid var(--primary, #dd3333); outline-offset: 1px; }
 
+/* Badges: teachPress 2016 shape; colours darkened for 4.5:1 text contrast. */
 .tp_pub_type, .tp_pub_label_status {
   display: inline-block;
   vertical-align: 1px;
-  margin-left: 3px;
-  padding: 1px 4px;
+  margin-left: 5px;
+  padding: 3px 4px;
   border-radius: 2px;
-  background: #0088cc;
+  background: #006fa6;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .12);
   color: #fff;
-  font-size: 9px;
+  font-size: 10.5px;
   font-weight: 700;
-  line-height: 1.6;
+  line-height: 1;
   white-space: nowrap;
 }
-.tp_pub_label_status { background: #f59d00; }
-.tp_pub_label_status.submitted, .tp_pub_label_status.inreview { background: #999; }
-.tp_pub_label_status.accepted { background: #3e9b41; }
+.tp_pub_label_status { background: #ffa500; color: #222; }
+.tp_pub_label_status.submitted, .tp_pub_label_status.inreview { background: #6b6b6b; color: #fff; }
+.tp_pub_label_status.accepted { background: #2e7d32; color: #fff; }
 
-.tp_pub_menu { color: #555; }
+/* Abstract | Links | BibTeX toggles: plain text that turns bold while open. */
 .tp_pub_menu .tp_show, .tp_close {
   all: unset;
   cursor: pointer;
-  color: #555;
+  color: var(--text, #707070);
 }
-.tp_pub_menu .tp_show:hover, .tp_close:hover { color: var(--primary); text-decoration: underline; }
-.tp_pub_menu .tp_show[aria-expanded="true"] { color: var(--primary); }
-.tp_pub_menu .tp_show:focus-visible, .tp_close:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }
-.tp_pub_menu a { color: var(--primary); text-decoration: underline; }
-.tp_pub_tags_label { color: #555; }
+.tp_pub_menu .tp_show:hover, .tp_close:hover { color: var(--primary, #dd3333); }
+.tp_pub_menu .tp_show[aria-expanded="true"] { font-weight: 700; }
+.tp_pub_menu .tp_show:focus-visible, .tp_close:focus-visible { outline: 2px solid var(--primary, #dd3333); outline-offset: 1px; }
+.tp_pub_menu a { color: var(--primary, #dd3333); text-decoration: underline; }
+.tp_pub_menu a:hover { text-decoration: none; }
 
-.tp_abstract, .tp_bibtex, .tp_links {
-  margin: 8px 0 4px;
-  padding: 10px 12px 6px;
-  background: #fafafa;
-  border: 1px solid #e5e5e5;
-  border-radius: 2px;
-}
+/* ---------------------------------------------------------------- panels */
+
 .tp_abstract[hidden], .tp_bibtex[hidden], .tp_links[hidden] { display: none; }
-.tp_abstract_entry { text-align: justify; color: #555; }
+.tp_abstract_entry, .tp_bibtex_entry, .tp_links_entry { padding: 8px; }
+.tp_abstract_entry { font-size: 1rem; color: var(--text, #707070); }
+.tp_bibtex_entry { position: relative; font-size: .8rem; }
 .tp_bibtex_entry pre {
-  margin: 0;
-  font-family: Menlo, Consolas, "Courier New", monospace;
-  font-size: 12px;
-  line-height: 1.5;
-  color: #333;
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 2px;
+  background: var(--border, #e9e9e9);
+  color: #292b2c;
+  font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+  font-size: 12.8px;
+  line-height: 1.7;
   white-space: pre-wrap;
-  word-break: break-word;
+  overflow-wrap: anywhere;
 }
-.tp_bibtex_entry { position: relative; }
 .tp-copy {
-  position: absolute; top: 0; right: 0;
-  border: 1px solid #ddd; background: #fff; color: #555;
-  font-size: 11px; padding: 2px 8px; border-radius: 2px; cursor: pointer;
+  position: absolute; top: 34px; right: 14px;
+  border: 1px solid #ccc; border-radius: 2px; background: #fff; color: #555;
+  font-family: var(--font-body, "Open Sans", Helvetica, Arial, sans-serif); font-size: 12px; line-height: 1; padding: 6px 10px; cursor: pointer;
+  transition: color .15s, border-color .15s;
 }
-.tp-copy:hover { color: var(--primary); border-color: #bbb; }
-.tp_pub_list { list-style: none; margin: 0; padding: 0; }
-.tp_pub_list li { margin: 0 0 4px; display: flex; gap: 8px; align-items: baseline; word-break: break-all; }
-.tp_pub_list li i { width: 16px; text-align: center; color: #555; flex: none; }
-.tp_close_menu { text-align: right; font-size: 12px; margin-top: 6px !important; }
+.tp-copy:hover { color: var(--primary, #dd3333); border-color: #aaa; }
+ul.tp_pub_list { list-style: none; margin: 21px 0; padding: 0 0 0 20px; }
+ul.tp_pub_list li { display: flex; align-items: baseline; margin: 0 0 0 10px; padding: 3px 0; font-size: .9rem; overflow-wrap: anywhere; }
+ul.tp_pub_list li i { width: 25px; flex: none; color: var(--text, #707070); }
+ul.tp_pub_list a { color: var(--primary, #dd3333); padding: 5px 0; text-decoration: none; }
+ul.tp_pub_list a:hover { text-decoration: underline; }
+.tp_close_menu { margin: 1px 0 !important; font-size: 1rem; }
+.tp_close { font-weight: 700; }
 
 .tp-loading { opacity: .5; transition: opacity .15s; }
 
+/* ------------------------------------------------------------ responsive */
+
 @media (pointer: coarse) {
-  .tp_pub_menu { line-height: 2.1; }
-  .tp_pub_menu .tp_show, .tp_close { padding: 4px 2px; }
+  .tp_pub_menu .tp_show, .tp_close { display: inline-flex; align-items: center; min-height: 40px; padding: 0 2px; vertical-align: middle; }
+  .tablenav .page-numbers.button { min-width: 36px; height: 36px; }
+  /* 16px keeps iOS Safari from zooming the page when a field gets focus */
+  .teachpress_filter select, .teachpress_filter input[type="search"], .teachpress_filter .tp-reset { font-size: 16px; }
 }
 
 @media (max-width: 767px) {
+  .papers-page .tp-publist { padding: 0; }
+  .teachpress_filter { gap: 6px; }
   .teachpress_filter select, .teachpress_filter input[type="search"] { flex: 1 1 45%; max-width: none !important; width: auto; }
   .tablenav { justify-content: center; }
-  .tp_publication { padding: 10px 8px; }
+  .teachpress_publication_list .tp_h3 { padding-bottom: 12px; }
+  .tp_pub_author, .tp_pub_title, .tp_pub_additional, .tp_pub_menu, .tp_abstract_entry { font-size: 15px; }
+  ul.tp_pub_list { padding-left: 0; }
 }

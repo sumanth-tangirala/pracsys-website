@@ -1,3 +1,62 @@
 [
-  { "from": "/kevin-chen/", "to": "/members/kevin-chen/" }
+  {
+    "from": "/kevin-chen/",
+    "to": "/members/kevin-chen/"
+  },
+  {
+    "from": "/portfolio/manipulation/",
+    "to": "/projects/manipulation/"
+  },
+  {
+    "from": "/portfolio/verification/",
+    "to": "/projects/verification/"
+  },
+  {
+    "from": "/portfolio/perception/",
+    "to": "/projects/perception/"
+  },
+  {
+    "from": "/portfolio/planning/",
+    "to": "/projects/planning/"
+  },
+  {
+    "from": "/portfolio/soft-robots/",
+    "to": "/projects/soft-robots/"
+  },
+  {
+    "from": "/portfolio/dynamics/",
+    "to": "/projects/dynamics/"
+  },
+  {
+    "from": "/portfolio/rearrangment-planning/",
+    "to": "/projects/planning/"
+  },
+  {
+    "from": "/portfolio/3-controlling-adaptive-hands/",
+    "to": "/projects/manipulation/"
+  },
+  {
+    "from": "/projects/robot-vision/",
+    "to": "/robot-vision/"
+  },
+  {
+    "from": "/projects/tensegrity/",
+    "to": "/projects/soft-robots/"
+  },
+  {
+    "from": "/projects/kinodynamic-planning/",
+    "to": "/projects/dynamics/"
+  },
+  {
+    "from": "/category/pracsys-news/",
+    "to": "/news/"
+  },
+  {
+    "from": "/category/pracsys-news/page/2/",
+    "to": "/news/"
+  },
+  {
+    "from": "/news/page/2/",
+    "to": "/news/"
+  }
 ]

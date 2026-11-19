@@ -57,7 +57,7 @@ test('malformed entries are reported, not silently dropped', () => {
 });
 
 test('LaTeX is converted for display', () => {
-  assert.equal(latexToText('Caf{\\\'e} \\& {RRT}$^*$ -- fast'), 'Café & RRT$^*$ – fast');
+  assert.equal(latexToText('Caf{\\\'e} \\& {RRT}$^*$ -- fast'), 'Café & RRT* – fast');
   assert.equal(latexToText('M{\\"u}ller'), 'Müller');
 });
 

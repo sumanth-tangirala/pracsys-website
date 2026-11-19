@@ -1,5 +1,6 @@
 /** Admin-side helpers: field metadata, validation, data checks. */
 import { TYPES, TYPE_FIELDS, PUBSTATES, filterPublications, splitNames, parseName, displayName, toPublication } from '../lib/publications.js';
+import { latexToText } from '../lib/bibtex.js';
 
 export const FIELD_LABELS = {
   title: 'Title',
@@ -45,11 +46,6 @@ export const FIELD_HELP = {
   doi: 'Just the DOI, e.g. 10.1109/ICRA.2012.6224582',
 };
 
-/** Fields the editor renders explicitly (everything else goes to "Other fields"). */
-export const MANAGED_FIELDS = new Set(['title', 'author', 'editor', 'year', 'date', 'pubstate', 'keywords', 'abstract', 'url', 'doi', 'tppubtype',
-  'booktitle', 'journal', 'volume', 'number', 'pages', 'publisher', 'address', 'organization', 'school', 'institution', 'series', 'edition',
-  'chapter', 'howpublished', 'techtype', 'issuetitle', 'isbn', 'issn', 'note']);
-
 export const EXTRA_FIELDS = ['note', 'crossref', 'image', 'annote'];
 
 export function venueFields(type) {
@@ -70,7 +66,7 @@ export const KEY_PATTERN = /^[A-Za-z0-9_:\-.+\/]+$/;
 export function suggestKey(fields, existingKeys) {
   const first = splitNames(fields.author || fields.editor || '')[0];
   const last = first ? parseName(first).last : 'anon';
-  const word = String(fields.title || '')
+  const word = latexToText(fields.title || '')
     .toLowerCase()
     .normalize('NFD').replace(/[̀-ͯ]/g, '')
     .split(/[^a-z0-9]+/)
@@ -86,7 +82,7 @@ export function suggestKey(fields, existingKeys) {
  * Validate an entry being edited.
  * @returns {{errors: Array<{field, message}>, warnings: Array<{field, message}>}}
  */
-export function validateEntry(entry, { existingKeys, originalKey, knownAuthors }) {
+export function validateEntry(entry, { existingKeys, originalKey, knownAuthors, knownTitles }) {
   const errors = [];
   const warnings = [];
   const f = entry.fields;
@@ -96,6 +92,10 @@ export function validateEntry(entry, { existingKeys, originalKey, knownAuthors }
   else if (!KEY_PATTERN.test(key)) errors.push({ field: 'key', message: 'Use only letters, numbers and _ - : . + / in the citation key (no spaces).' });
   else if (key !== originalKey && existingKeys.has(key)) errors.push({ field: 'key', message: `Another publication already uses the key “${key}”.` });
   if (!String(f.title || '').trim()) errors.push({ field: 'title', message: 'A title is required.' });
+  else if (knownTitles) {
+    const other = knownTitles.get(normalizeTitle(f.title));
+    if (other && other !== originalKey) warnings.push({ field: 'title', message: `“${other}” has the same title. Is this a duplicate?` });
+  }
   const year = String(f.year || '').trim();
   if (!year && f.pubstate !== 'forthcoming') errors.push({ field: 'year', message: 'A year is required (or set the status to Forthcoming).' });
   else if (year && !/^\d{4}$/.test(year)) errors.push({ field: 'year', message: 'Use a four-digit year, e.g. 2026.' });
@@ -110,14 +110,8 @@ export function validateEntry(entry, { existingKeys, originalKey, knownAuthors }
   const authors = splitNames(f.author);
   if (!authors.length && requiredFields(entry.type).has('author')) errors.push({ field: 'author', message: 'Add at least one author.' });
   if (knownAuthors) {
-    for (const raw of authors) {
-      const p = parseName(raw);
-      const d = displayName(p);
-      if (knownAuthors.has(d)) continue;
-      const sameLast = [...knownAuthors].filter((k) => k.split(', ')[0] === p.last);
-      if (sameLast.length) {
-        warnings.push({ field: 'author', message: `“${raw}” is listed as ${sameLast.map((s) => `“${s}”`).join(' or ')} on other papers. Use the same spelling so author filters and member pages stay accurate.` });
-      }
+    for (const s of authorSuggestions(authors, knownAuthors)) {
+      warnings.push({ field: 'author', message: `“${s.raw}” is written ${s.known.map((k) => `“${k}”`).join(' or ')} on other papers. Use the same spelling so author filters and member pages stay accurate.`, fix: s });
     }
   }
   for (const line of String(f.url || '').split('\n').map((l) => l.trim()).filter(Boolean)) {
@@ -163,6 +157,105 @@ export function dataIssues(entries) {
     }
   }
   return issues;
+}
+
+/** Lower-case, accent- and punctuation-free title used to spot duplicates. */
+export function normalizeTitle(title) {
+  return latexToText(title || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+}
+
+/** Map of normalised title → key for spotting duplicates. */
+export function titleIndex(entries) {
+  const m = new Map();
+  for (const e of entries) {
+    const t = normalizeTitle(e.fields.title);
+    if (t && !m.has(t)) m.set(t, e.key);
+  }
+  return m;
+}
+
+const fold = (s) => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+const PARTICLES = /^(von|van|der|den|de|del|della|di|da|du|la|le|dos|das|ter|ten|zu)$/;
+
+/** Split a name on top-level whitespace (braced groups stay together). */
+function nameTokens(name) {
+  const tokens = [];
+  let depth = 0;
+  let cur = '';
+  for (const c of name) {
+    if (c === '{') depth++;
+    if (c === '}') depth--;
+    if (/\s/.test(c) && depth === 0) {
+      if (cur) tokens.push(cur);
+      cur = '';
+    } else cur += c;
+  }
+  if (cur) tokens.push(cur);
+  return tokens;
+}
+
+/** {first, last} keeping the raw BibTeX text, with "van der" particles in the last name. */
+function splitRawName(raw) {
+  const name = String(raw).trim();
+  if (name.includes(',')) {
+    const [last, ...rest] = name.split(',');
+    return { first: rest.join(',').trim(), last: last.trim() };
+  }
+  const tokens = nameTokens(name);
+  if (tokens.length < 2) return { first: '', last: name };
+  let i = tokens.length - 1;
+  while (i > 1 && PARTICLES.test(tokens[i - 1])) i--;
+  return { first: tokens.slice(0, i).join(' '), last: tokens.slice(i).join(' ') };
+}
+
+/**
+ * Lab style for an author name: first initial + last name
+ * ("Kostas E. Bekris" or "Bekris, Kostas" → "K Bekris"). When another paper
+ * already spells this person with the same last name and initial (e.g.
+ * "N V Navkar") that spelling wins. Braced names ("{PRACSYS Lab}") and
+ * "others" are left alone.
+ */
+export function labStyleName(raw, knownAuthors) {
+  const name = String(raw || '').trim();
+  if (!name || /^\{.*\}$/.test(name) || /^others$/i.test(name)) return name;
+  const { first, last } = splitRawName(name);
+  const initial = latexToText(first).match(/\p{L}/u)?.[0]?.toUpperCase();
+  if (!initial || !last) return name;
+  if (knownAuthors) {
+    const lastText = fold(latexToText(last).replace(/[{}]/g, ''));
+    const same = [...knownAuthors].filter((k) => {
+      const [kl, kf = ''] = k.split(', ');
+      return fold(kl) === lastText && fold(kf).startsWith(fold(initial));
+    });
+    if (same.length === 1) {
+      const [kl, kf = ''] = same[0].split(', ');
+      return kf ? `${kf} ${kl}` : kl;
+    }
+  }
+  return `${initial} ${last}`;
+}
+
+/** Rewrite a BibTeX name list ("A and B") in lab style. */
+export function labStyleNames(value, knownAuthors) {
+  return splitNames(value).map((n) => labStyleName(n, knownAuthors)).join(' and ');
+}
+
+/**
+ * Authors whose last name matches a known author but are written differently.
+ * Each result: { raw, index, known: [display names], suggestion: "K Bekris" | null }.
+ */
+export function authorSuggestions(names, knownAuthors) {
+  const out = [];
+  names.forEach((raw, index) => {
+    const p = parseName(raw);
+    if (!p.last || knownAuthors.has(displayName(p))) return;
+    const known = [...knownAuthors].filter((k) => fold(k.split(', ')[0]) === fold(p.last));
+    if (!known.length) return;
+    const lab = labStyleName(raw, knownAuthors);
+    const labDisplay = displayName(parseName(lab));
+    out.push({ raw, index, known, suggestion: lab !== raw && knownAuthors.has(labDisplay) ? lab : null });
+  });
+  return out;
 }
 
 /** Keys of all known author display names in a publication list. */

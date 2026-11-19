@@ -8,9 +8,9 @@ sidebar: true
 {% for g in members.groups %}
 <h3><strong>{{ g.title }}</strong></h3>
 <ul>
-  {% for slug in g.slugs %}{% set m = members.current | memberBySlug(slug) %}
+  {% for slug in g.slugs %}{% set m = members.current | memberBySlug(slug) %}{% if m %}
   <li><a href="/members/{{ m.slug }}/">{{ m.name }}</a>{% if g.sep %}{{ g.sep }}{{ m.position }}{% elif m.note %}: {{ m.note }}{% endif %}</li>
-  {% endfor %}
+  {% endif %}{% endfor %}
 </ul>
 {% endfor %}
 <h2><strong>Alumni</strong></h2>

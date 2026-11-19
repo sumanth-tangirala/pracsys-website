@@ -9,6 +9,9 @@
 <meta property="og:site_name" content="{{ site.title }}">
 <meta property="og:title" content="{% if title and not isHome %}{{ title | striptags }} &ndash; {% endif %}{{ site.title }}">
 <meta property="og:description" content="{{ (description or site.description) | striptags }}">
+<meta property="og:url" content="{{ site.url }}{{ page.url }}">
+<meta property="og:image" content="{{ site.url }}{{ site.hero.image }}">
+<link rel="canonical" href="{{ site.url }}{{ page.url }}">
 <meta name="theme-color" content="#dd3333">
 {% if site.noindex %}<meta name="robots" content="noindex">{% endif %}
 <link rel="icon" href="{{ site.favicon }}" sizes="32x32">
@@ -16,9 +19,9 @@
 <link rel="apple-touch-icon" href="{{ site.appleIcon }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Raleway:wght@400;500;600;700;800;900&family=Roboto:wght@400;500;600;700&display=swap">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Raleway:wght@400;500;600;700;800;900&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/v4-shims.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css">
 <link rel="stylesheet" href="/assets/css/site.css">
 <link rel="stylesheet" href="/assets/css/teachpress.css">
@@ -28,7 +31,7 @@
 </script>
 </head>
 <body class="{{ bodyClass or 'page' }}">
-<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+<a class="skip-link screen-reader-text" href="#main">Skip to content</a>
 <div id="page" class="site">
 {% include "partials/header.njk" %}
 <div id="content" class="site-content">

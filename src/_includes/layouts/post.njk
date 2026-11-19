@@ -2,9 +2,10 @@
 layout: layouts/base.njk
 bodyClass: single-post
 ---
+<main id="main" class="site-main">
 <div class="content-inner has-sidebar">
   <div class="container">
-    <main id="main" class="site-main content-area">
+    <div id="primary" class="content-area">
       <article class="post">
         <header class="entry-header">
           <h1 class="entry-title">{{ title }}</h1>
@@ -20,15 +21,16 @@ bodyClass: single-post
           {% if next %}<div class="nav-next"><a href="{{ next.url }}" rel="next">{{ next.data.title }} <span class="meta-nav">&rarr;</span></a></div>{% endif %}
         </nav>
       </article>
-    </main>
-    <div id="secondary" class="widget-area sidebar" role="complementary">
+    </div>
+    <div id="secondary" class="widget-area sidebar" role="complementary" aria-label="Sidebar">
       {% include "partials/sidebar.njk" %}
-      <aside class="widget">
+      <div class="widget">
         <h2 class="widget-title">Recent News</h2>
         <ul class="recent-posts">
           {% for p in collections.news | reverse %}{% if loop.index <= 5 %}<li><a href="{{ p.url }}">{{ p.data.title }}</a></li>{% endif %}{% endfor %}
         </ul>
-      </aside>
+      </div>
     </div>
   </div>
 </div>
+</main>

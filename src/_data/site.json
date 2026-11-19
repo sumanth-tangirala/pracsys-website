@@ -5,7 +5,7 @@
   "repo": "sumanth-tangirala/pracsys-website",
   "branch": "main",
   "noindex": true,
-  "logo": "/uploads/2024/11/PRACSYS-Logos-Horizontal.003-e1778875231877.png",
+  "logo": "/uploads/optimized/pracsys-header-logo-800.webp",
   "favicon": "/uploads/2024/11/cropped-rutgers-favicon.001-1-32x32.png",
   "appleIcon": "/uploads/2024/11/cropped-rutgers-favicon.001-1-180x180.png",
   "nav": [
@@ -32,7 +32,7 @@
   ],
   "hero": {
     "image": "/uploads/2025/02/Video-Aug-29-2018.jpg",
-    "logo": "/uploads/2024/11/PRACSYS-Logo-1024x307.png",
+    "logo": "/uploads/optimized/pracsys-logo-800.webp",
     "tagline": "Research in robot learning, perception, and planning",
     "subtitle": "Applications include manipulation and navigation for logistics, search & rescue and service robotics, with a focus on novel soft mechanisms and robots with significant dynamics",
     "buttons": [
@@ -46,7 +46,8 @@
         "href": "/members/kostas-bekris/",
         "style": "info"
       }
-    ]
+    ],
+    "logo2x": "/uploads/optimized/pracsys-logo-1600.webp"
   },
   "software": [
     {
@@ -123,7 +124,7 @@
     },
     {
       "label": "CBIM Research Center",
-      "href": "http://www.cbim.rutgers.edu/"
+      "href": "https://web.archive.org/web/20250220021156/https://cbim.rutgers.edu/"
     },
     {
       "label": "RU Center for Cognitive Science",
@@ -142,5 +143,6 @@
       "href": "http://rutgers.edu/"
     }
   ],
-  "copyright": "Copyright © 2018 - Prof. Kostas Bekris' PRACSYS Research Group"
+  "copyright": "Copyright © 2018 - Prof. Kostas Bekris' PRACSYS Research Group",
+  "logoOriginal": "/uploads/2024/11/PRACSYS-Logos-Horizontal.003-e1778875231877.png"
 }

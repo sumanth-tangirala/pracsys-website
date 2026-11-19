@@ -5,6 +5,12 @@ A static rebuild of [pracsys.cs.rutgers.edu](https://pracsys.cs.rutgers.edu/) �
 - **Live site:** https://www.sumanthtangirala.com/pracsys-website/
 - **Publication editor:** https://www.sumanthtangirala.com/pracsys-website/admin/
 
+## Documentation
+
+- [Editing publications](docs/editing-publications.md): for the PI and editors. Sign in, add, import and publish papers, plus an FAQ.
+- [Publication data review](docs/publication-data-review.md): errors in the imported teachPress data worth fixing (all left as they were on the old site).
+- [Maintaining the site](docs/maintaining-the-site.md): for students. Members, news, projects, site settings, editor accounts, hosting, and how the editor works under the hood.
+
 ## What's here
 
 | Path | What it is |
@@ -61,10 +67,13 @@ npm test           # BibTeX parsing/rendering tests (also run in CI)
 npm run build      # outputs _site/
 ```
 
+`site.noindex` in `src/_data/site.json` is `true` while this is a staging copy, so search engines don't index it alongside the official site. Set it to `false` when this becomes the lab's real site.
+
 `PATH_PREFIX` sets the base URL. CI uses `/<repo-name>/` for the GitHub Pages project URL. If the site moves to a custom domain served from `/`, set a repository variable `PATH_PREFIX` to `/`.
 
 ## Notes on the migration
 
 - Content, images and URLs follow the WordPress site, including the old news permalinks and `/members/…`, `/projects/…` paths.
 - A few broken links on the old site now point to working pages: the footer's *Openings* links (the old `robotics.cs.rutgers.edu` page is offline; its text, from the Internet Archive, is at `/openings/`), the *Projects* page tiles, and the sidebar's *Map* link (the Contact section now has a map).
-- The old site's `#tppubs` filter URLs (`?tgid=…&auth=…`) use internal teachPress IDs and aren't supported; the new Papers page uses readable ones, e.g. `/papers/?tag=Planning&author=Bekris%2C%20K`.
+- Old teachPress filter links (`/papers/?tgid=2&auth=189&yr=2024#tppubs`) still work: they are translated to the new readable filters, e.g. `/papers/?tag=Learning&author=Granados%2C%20E`. Old WordPress URLs (`/portfolio/…`, `/category/pracsys-news/`, `/kevin-chen/`) redirect to their new pages.
+- Images and links that pointed at the offline `robotics.cs.rutgers.edu` server were recovered from the Internet Archive where a copy exists, or replaced with local thumbnails.

@@ -19,6 +19,7 @@ const MAX_ATTEMPTS = 5;
 const LOCK_SECONDS = 60;
 
 let usersPromise = null;
+let sessionExpired = false;
 
 function store(kind) {
   try { return window[kind]; } catch { return null; }
@@ -34,7 +35,12 @@ export async function loadUsers() {
       if (!r.ok) throw new Error('Could not load the account list.');
       return r.json();
     })
-    .then((d) => d.users || []);
+    .then((d) => d.users || [])
+    .catch((err) => {
+      // Do not cache a failed request: the next attempt should try again.
+      usersPromise = null;
+      throw err;
+    });
   return usersPromise;
 }
 
@@ -113,7 +119,11 @@ export async function signIn(username, password, { remember = false } = {}) {
     expiresAt: now + (remember ? REMEMBER_DAYS * 864e5 : SESSION_HOURS * 36e5),
     remember,
   };
+  // A remembered session replaces any tab-only one and vice versa.
+  store('sessionStorage')?.removeItem(SESSION_KEY);
+  store('localStorage')?.removeItem(SESSION_KEY);
   (remember ? store('localStorage') : store('sessionStorage'))?.setItem(SESSION_KEY, JSON.stringify(session));
+  sessionExpired = false;
   return currentUser();
 }
 
@@ -121,9 +131,19 @@ export function currentUser() {
   for (const kind of ['sessionStorage', 'localStorage']) {
     const s = readJson(store(kind), SESSION_KEY, null);
     if (s && s.expiresAt > Date.now()) return { username: s.username, name: s.name, role: s.role, expiresAt: s.expiresAt };
-    if (s) store(kind)?.removeItem(SESSION_KEY);
+    if (s) {
+      store(kind)?.removeItem(SESSION_KEY);
+      sessionExpired = true;
+    }
   }
   return null;
+}
+
+/** True once after a stored session was found to have expired. */
+export function consumeSessionExpired() {
+  const was = sessionExpired;
+  sessionExpired = false;
+  return was;
 }
 
 export function signOut() {
@@ -141,6 +161,7 @@ export async function changePassword(current, next) {
   if (String(next).length < 8) throw new Error('Use at least 8 characters for the new password.');
   const users = await loadUsers();
   const record = users.find((u) => u.username === user.username);
+  if (!record) throw new Error('Your account is no longer in the account list (src/admin/users.json).');
   const overrides = readJson(store('localStorage'), OVERRIDES_KEY, {});
   const cred = overrides[user.username] || record;
   const check = await pbkdf2(String(current), b64ToBytes(cred.salt), cred.iterations);

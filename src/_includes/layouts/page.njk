@@ -1,6 +1,7 @@
 ---
 layout: layouts/base.njk
 ---
+<main id="main" class="site-main page-{{ page.fileSlug }}">
 {% if cover %}
 <div class="page-header page--cover" style="background-image: url('{{ cover | htmlBaseUrl }}')">
   <div class="container"><h1 class="entry-title">{{ title }}</h1></div>
@@ -12,15 +13,16 @@ layout: layouts/base.njk
 {% endif %}
 <div class="content-inner{% if sidebar %} has-sidebar{% endif %}{% if fullWidth %} full-width{% endif %}">
   <div class="container">
-    <main id="main" class="site-main content-area">
+    <div id="primary" class="content-area">
       <article class="entry-content">
 {{ content | safe }}
       </article>
-    </main>
+    </div>
     {% if sidebar %}
-    <div id="secondary" class="widget-area sidebar" role="complementary">
+    <div id="secondary" class="widget-area sidebar" role="complementary" aria-label="Sidebar">
       {% include "partials/sidebar.njk" %}
     </div>
     {% endif %}
   </div>
 </div>
+</main>

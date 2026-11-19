@@ -4,16 +4,23 @@ sidebar: true
 pagination:
   data: members.current
   size: 1
+  addAllPagesToCollections: true
   alias: member
 permalink: "/members/{{ member.slug }}/"
 eleventyComputed:
   title: "{{ member.title }}"
   description: "{{ member.name }} — {{ member.position }}, PRACSYS Lab, Rutgers University."
 ---
+{#- The live site built these three pages with Elementor: content inset 10px, and
+    two of them put the photo in a 33% / 50% column beside the text. -#}
+{%- set layouts = { "edgar-granados": "inset split split-33", "ewerton-r-vieira": "inset split split-50", "sumanth-tangirala": "inset" } -%}
+{%- set layout = layouts[member.slug] -%}
+<div class="member-page{% if layout %} member-page--{{ layout | replace(' ', ' member-page--') }}{% endif %}">
 <div class="member-bio">
 {% include "bios/" + member.slug + ".html" %}
 </div>
 {% if member.showPublications and member.authors.length and (publications | pubCount({ authors: member.authors })) %}
-<h3>Publications:</h3>
+<h2 class="publications-heading">Publications:</h2>
 {% publist publications, { authors: member.authors }, { idPrefix: 'm' } %}
 {% endif %}
+</div>

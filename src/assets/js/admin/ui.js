@@ -32,10 +32,19 @@ function render(v) {
 export function $(sel, root = document) { return root.querySelector(sel); }
 export function $$(sel, root = document) { return [...root.querySelectorAll(sel)]; }
 
+export function prefersReducedMotion() {
+  return !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+}
+
+/** Scroll an element into view, without animation when the user asked for less motion. */
+export function scrollToEl(el, block = 'start') {
+  el?.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block });
+}
+
 let toastHost = null;
 /** Non-blocking status message. kind: info | success | error */
-export function toast(message, kind = 'info', timeout = 4200) {
-  if (!toastHost) {
+export function toast(message, kind = 'info', timeout = kind === 'error' ? 8000 : 4200) {
+  if (!toastHost || !toastHost.isConnected) {
     toastHost = document.createElement('div');
     toastHost.className = 'adm-toasts';
     toastHost.setAttribute('role', 'status');
@@ -44,23 +53,31 @@ export function toast(message, kind = 'info', timeout = 4200) {
   }
   const t = document.createElement('div');
   t.className = `adm-toast adm-toast-${kind}`;
-  t.innerHTML = `<span>${esc(message)}</span><button type="button" aria-label="Dismiss">&times;</button>`;
+  t.innerHTML = `<span>${esc(message)}</span><button type="button" aria-label="Dismiss message">&times;</button>`;
   t.querySelector('button').addEventListener('click', () => t.remove());
   toastHost.append(t);
+  // Keep at most two messages so they never pile up over the page's buttons.
+  while (toastHost.children.length > 2) toastHost.firstElementChild.remove();
   if (timeout) setTimeout(() => t.remove(), timeout);
 }
 
+let dialogSeq = 0;
 /**
- * Accessible confirmation dialog. Resolves true when confirmed.
+ * Accessible confirmation dialog. Resolves true when confirmed; Escape or
+ * the cancel button resolve false. Focus returns to where it was.
  * @param {{title: string, body?: string, confirm?: string, cancel?: string, danger?: boolean}} o
  */
 export function confirmDialog(o) {
   return new Promise((resolve) => {
+    const id = `adm-dlg-${++dialogSeq}`;
+    const opener = document.activeElement;
     const dlg = document.createElement('dialog');
     dlg.className = 'adm-dialog';
+    dlg.setAttribute('aria-labelledby', `${id}-title`);
+    if (o.body) dlg.setAttribute('aria-describedby', `${id}-body`);
     dlg.innerHTML = `<form method="dialog">
-      <h2>${esc(o.title)}</h2>
-      ${o.body ? `<p>${esc(o.body)}</p>` : ''}
+      <h2 id="${id}-title">${esc(o.title)}</h2>
+      ${o.body ? `<p id="${id}-body">${esc(o.body)}</p>` : ''}
       <div class="adm-dialog-actions">
         <button value="cancel" class="adm-btn">${esc(o.cancel || 'Cancel')}</button>
         <button value="ok" class="adm-btn ${o.danger ? 'adm-btn-danger' : 'adm-btn-primary'}">${esc(o.confirm || 'OK')}</button>
@@ -69,10 +86,31 @@ export function confirmDialog(o) {
     dlg.addEventListener('close', () => {
       resolve(dlg.returnValue === 'ok');
       dlg.remove();
+      if (opener?.isConnected && document.activeElement === document.body) opener.focus({ preventScroll: true });
     });
     dlg.showModal();
     dlg.querySelector(`button[value="${o.danger ? 'cancel' : 'ok'}"]`).focus();
   });
+}
+
+/**
+ * Run a change to the stored data. Saving can fail (browser storage full or
+ * blocked, or a key clash): show why and return false instead of failing silently.
+ */
+export function attempt(fn, what = 'Could not save the change') {
+  try {
+    fn();
+    return true;
+  } catch (err) {
+    console.warn(err);
+    toast(`${what}: ${err.message}`, 'error');
+    return false;
+  }
+}
+
+/** True while a modal dialog is open (keyboard shortcuts should wait). */
+export function dialogIsOpen() {
+  return !!document.querySelector('dialog[open]');
 }
 
 export function download(filename, text, type = 'text/plain') {
@@ -80,6 +118,7 @@ export function download(filename, text, type = 'text/plain') {
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = filename;
+  a.hidden = true;
   document.body.append(a);
   a.click();
   setTimeout(() => {
@@ -128,6 +167,6 @@ export function plural(n, one, many = `${one}s`) {
 
 /** Status pill for a publication. */
 export function statusBadge(status) {
-  const labels = { published: 'Published', edited: 'Edited', new: 'New', deleted: 'Deleted' };
+  const labels = { published: 'Published', edited: 'Edited', new: 'New', deleted: 'Deleted', renamed: 'Renamed' };
   return html`<span class="adm-badge adm-badge-${status}">${labels[status] || status}</span>`;
 }
